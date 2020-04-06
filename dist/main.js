@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"canvas {\\n  border: 1px solid black;\\n}\\n\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./src/main.css?./node_modules/css-loader/dist/cjs.js");
+eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"#canvas {\\n  border: 1px solid black;\\n}\\n\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./src/main.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -129,7 +129,7 @@ eval("\n\nvar isOldIE = function isOldIE() {\n  var memo;\n  return function mem
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./src/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./src/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _spiral_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spiral.js */ \"./src/spiral.js\");\n/* harmony import */ var _spiral_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_spiral_js__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -141,6 +141,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mai
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ \"./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js\");\n            var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!./main.css */ \"./node_modules/css-loader/dist/cjs.js!./src/main.css\");\n\n            content = content.__esModule ? content.default : content;\n\n            if (typeof content === 'string') {\n              content = [[module.i, content, '']];\n            }\n\nvar options = {};\n\noptions.insert = \"head\";\noptions.singleton = false;\n\nvar update = api(content, options);\n\nvar exported = content.locals ? content.locals : {};\n\n\n\nmodule.exports = exported;\n\n//# sourceURL=webpack:///./src/main.css?");
+
+/***/ }),
+
+/***/ "./src/spiral.js":
+/*!***********************!*\
+  !*** ./src/spiral.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("// Props\nconst SIDE_LENGTH = 400;\nconst RADIAL_STEPS = 10; // Even & > 8\nconst POLAR_TURNS = 50;\n\n// derived\nconst diagonalLength = Math.sqrt(Math.pow(SIDE_LENGTH, 2) * 2);\nconst polarGap = diagonalLength / (POLAR_TURNS * 12); // 15 is eyeballed\nconst center = SIDE_LENGTH / 2;\nconst increment = (2 * Math.PI) / RADIAL_STEPS;\n\n// Setup\nconst c = document.getElementById('canvas');\nc.width = SIDE_LENGTH;\nc.height = SIDE_LENGTH;\nconst ctx = c.getContext('2d');\nctx.moveTo(center, center);\n\nlet angle = increment;\n\nwhile (angle < POLAR_TURNS * 2 * Math.PI) {\n  let x = center + angle * Math.cos(angle) * polarGap;\n  let y = center + angle * Math.sin(angle) * polarGap;\n  ctx.lineTo(x, y);\n  angle = angle + increment;\n}\nctx.stroke();\n\n\n//# sourceURL=webpack:///./src/spiral.js?");
 
 /***/ })
 
