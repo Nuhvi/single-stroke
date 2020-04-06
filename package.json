@@ -1,0 +1,25 @@
+{
+  "name": "single-stroke",
+  "version": "1.0.0",
+  "description": "Generative art",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --watch --mode development",
+    "start": "live-server ./dist/"
+  },
+  "keywords": [
+    "generative"
+  ],
+  "author": "ar nazeh",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "css-loader": "^3.5.0",
+    "style-loader": "^1.1.3"
+  }
+}
