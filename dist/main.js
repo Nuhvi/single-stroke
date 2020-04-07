@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"#canvas {\\n  border: 1px solid black;\\n}\\n\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./src/main.css?./node_modules/css-loader/dist/cjs.js");
+eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"#canvas {\\n  border: 1px solid rgb(255, 0, 0);\\n}\\n\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./src/main.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -129,7 +129,7 @@ eval("\n\nvar isOldIE = function isOldIE() {\n  var memo;\n  return function mem
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./src/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _spiral_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spiral.js */ \"./src/spiral.js\");\n/* harmony import */ var _spiral_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_spiral_js__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./src/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _spiral_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spiral.js */ \"./src/spiral.js\");\n\n\n\n// props\nconst WIDTH = 800; // px\nlet HEIGHT = null; // px, null if square\n\n// derived\nHEIGHT = HEIGHT || WIDTH;\n\n// Setup\nconst c = document.getElementById('canvas');\nc.width = WIDTH;\nc.height = HEIGHT;\nconst ctx = c.getContext('2d');\nctx.moveTo(WIDTH / 2, HEIGHT / 2);\n\nconst spiralVerticies = Object(_spiral_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(WIDTH, HEIGHT);\n\nspiralVerticies.forEach((vertex) => {\n  ctx.lineTo(...vertex);\n});\n\nctx.stroke();\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -148,10 +148,11 @@ eval("var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtim
 /*!***********************!*\
   !*** ./src/spiral.js ***!
   \***********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("// Props\nconst WIDTH = 600; // px\nlet HEIGHT = null; // px, null if square\nconst RESOLUTION = 100;\nconst radialSteps = RESOLUTION / 10; // Even & > 8\nconst POLAR_TURNS = RESOLUTION; // eyeballed 6\n\n// derived\nHEIGHT = HEIGHT || WIDTH;\nconst diagonalLength = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);\nconst polarGap = diagonalLength / POLAR_TURNS;\nconst centerX = WIDTH / 2;\nconst centerY = HEIGHT / 2;\nconst angleIncrement = (2 * Math.PI) / radialSteps;\n\n// Setup\nconst c = document.getElementById('canvas');\nc.width = WIDTH;\nc.height = HEIGHT;\nconst ctx = c.getContext('2d');\nctx.moveTo(centerX, centerY);\n\nlet angle = angleIncrement;\nlet r;\n\ndo {\n  r = polarGap * angle;\n\n  const x = centerX + r * Math.cos(angle);\n  const y = centerY + r * Math.sin(angle);\n  ctx.lineTo(x, y);\n\n  angle += angleIncrement;\n} while (r < diagonalLength / 2);\nctx.stroke();\n\n\n//# sourceURL=webpack:///./src/spiral.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// Props\n\nconst RESOLUTION = 100;\nconst radialSteps = RESOLUTION / 10; // Even & > 8\nconst POLAR_TURNS = RESOLUTION; // eyeballed 6\n\n// derived\n\nconst angleIncrement = (2 * Math.PI) / radialSteps;\n\nconst calculateSpiralPath = (WIDTH, HEIGHT) => {\n  const centerX = WIDTH / 2;\n  const centerY = HEIGHT / 2;\n  const diagonalLength = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);\n  const polarGap = diagonalLength / POLAR_TURNS;\n\n  let angle = angleIncrement;\n  let r;\n\n  const spiralVerticies = [];\n\n  do {\n    r = polarGap * angle;\n    const x = centerX + r * Math.cos(angle);\n    const y = centerY + r * Math.sin(angle);\n    spiralVerticies.push([x, y]);\n\n    angle += angleIncrement;\n  } while (r < diagonalLength / 2);\n\n  return spiralVerticies;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (calculateSpiralPath);\n\n\n//# sourceURL=webpack:///./src/spiral.js?");
 
 /***/ })
 
