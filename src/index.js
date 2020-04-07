@@ -15,7 +15,7 @@ c.height = HEIGHT;
 const ctx = c.getContext('2d');
 ctx.moveTo(WIDTH / 2, HEIGHT / 2);
 
-const spiralVerticies = calculateSpiralPath(WIDTH, HEIGHT);
+const { spiralVerticies } = calculateSpiralPath(WIDTH, HEIGHT);
 
 spiralVerticies.forEach((vertex) => {
   ctx.lineTo(...vertex);
