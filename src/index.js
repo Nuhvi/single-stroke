@@ -1,5 +1,6 @@
 import './main.css';
 import makeSpiral from './makeSpiral.js';
+import makeStroke from './makeStroke.js';
 
 // props
 const WIDTH = 500; // px
@@ -15,7 +16,6 @@ const c = document.getElementById('canvas');
 c.width = WIDTH;
 c.height = HEIGHT;
 const ctx = c.getContext('2d');
-ctx.moveTo(centerX, centerY);
 
 const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
 
@@ -23,25 +23,25 @@ const baseSpiral = makeSpiral({
   diameter: diagonal,
 });
 
-baseSpiral.forEach((vertex) => {
-  let [x, y] = vertex;
-  x += centerX;
-  y += centerY;
+// ctx.moveTo(centerX, centerY);
+// baseSpiral.forEach((vertex) => {
+//   let [x, y] = vertex;
+//   x += centerX;
+//   y += centerY;
 
-  ctx.lineTo(x, y);
-});
+//   ctx.lineTo(x, y);
+// });
+
+const offsetedSpiral = makeStroke({ path: baseSpiral });
 
 ctx.moveTo(centerX, centerY);
-
-const jitteredSpiral = makeSpiral({
-  diameter: diagonal,
-});
-
-jitteredSpiral.forEach((vertex) => {
+offsetedSpiral.forEach((vertex) => {
   let [x, y] = vertex;
   x += centerX;
   y += centerY;
+
   ctx.lineTo(x, y);
 });
 
-ctx.stroke();
+ctx.closePath();
+ctx.fill();
