@@ -3,7 +3,7 @@ import calculateSpiralPath from './spiral.js';
 
 // props
 const WIDTH = 500; // px
-let HEIGHT; // px, null if square
+let HEIGHT = null; // px, null if square
 
 // derived
 HEIGHT = HEIGHT || WIDTH;
@@ -15,11 +15,19 @@ c.height = HEIGHT;
 const ctx = c.getContext('2d');
 ctx.moveTo(WIDTH / 2, HEIGHT / 2);
 
-const { spiralVerticies } = calculateSpiralPath(WIDTH, HEIGHT);
+const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
+
+const { spiralVerticies } = calculateSpiralPath({
+  diameter: diagonal,
+});
 
 spiralVerticies.forEach((vertex) => {
-  ctx.lineTo(...vertex);
-  ctx.strokeRect(vertex[0] - 1.5, vertex[1] - 1.5, 3, 3);
+  let [x, y] = vertex;
+  x += WIDTH / 2;
+  y += HEIGHT / 2;
+
+  ctx.lineTo(x, y);
+  ctx.strokeRect(x - 1.5, y - 1.5, 3, 3);
 });
 
 ctx.stroke();
