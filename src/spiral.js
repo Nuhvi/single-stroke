@@ -1,32 +1,34 @@
 // Props
 
-const RESOLUTION = 200;
-const radialSteps = RESOLUTION / 10; // Even & > 8
-const POLAR_TURNS = 20;
-
-// derived
-
-const angleIncrement = (2 * Math.PI) / radialSteps;
+const PATH_SUBDIVISION = 200; // Chords density
+const COILS = 100;
 
 const calculateSpiralPath = (WIDTH, HEIGHT) => {
   const centerX = WIDTH / 2;
   const centerY = HEIGHT / 2;
   const diagonalLength = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
-  const polatGrowth = diagonalLength / ((POLAR_TURNS * radialSteps) / 2);
+  const polarStep = diagonalLength / (COILS * 2 * Math.PI);
+  const cordLength = diagonalLength / PATH_SUBDIVISION;
 
-  let angle = angleIncrement;
-  let r;
+  let theta = 1;
+  let polarDistance = polarStep * 2;
 
   const spiralVerticies = [];
 
   do {
-    r = polatGrowth * angle;
-    const x = centerX + r * Math.cos(angle);
-    const y = centerY + r * Math.sin(angle);
+    const x = centerX + polarDistance * Math.cos(theta);
+    const y = centerY + polarDistance * Math.sin(theta);
+
     spiralVerticies.push([x, y]);
 
-    angle += angleIncrement;
-  } while (r < diagonalLength / 2);
+    theta += cordLength / polarDistance;
+    polarDistance = polarStep * theta;
+  } while (polarDistance < diagonalLength / 2);
+
+  console.log({
+    diagonalLength,
+    chordsNO: spiralVerticies.length,
+  });
 
   return spiralVerticies;
 };
