@@ -2,7 +2,7 @@ import './main.css';
 import calculateSpiralPath from './spiral.js';
 
 // props
-const WIDTH = 800; // px
+const WIDTH = 500; // px
 let HEIGHT; // px, null if square
 
 // derived
