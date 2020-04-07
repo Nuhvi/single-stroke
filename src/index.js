@@ -1,5 +1,5 @@
 import './main.css';
-import calculateSpiralPath from './spiral.js';
+import makeSpiral from './makeSpiral.js';
 
 // props
 const WIDTH = 500; // px
@@ -7,27 +7,41 @@ let HEIGHT = null; // px, null if square
 
 // derived
 HEIGHT = HEIGHT || WIDTH;
+const centerX = WIDTH / 2;
+const centerY = HEIGHT / 2;
 
 // Setup
 const c = document.getElementById('canvas');
 c.width = WIDTH;
 c.height = HEIGHT;
 const ctx = c.getContext('2d');
-ctx.moveTo(WIDTH / 2, HEIGHT / 2);
+ctx.moveTo(centerX, centerY);
 
 const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
 
-const { spiralVerticies } = calculateSpiralPath({
+const baseSpiral = makeSpiral({
   diameter: diagonal,
 });
 
-spiralVerticies.forEach((vertex) => {
+baseSpiral.forEach((vertex) => {
   let [x, y] = vertex;
-  x += WIDTH / 2;
-  y += HEIGHT / 2;
+  x += centerX;
+  y += centerY;
 
   ctx.lineTo(x, y);
-  ctx.strokeRect(x - 1.5, y - 1.5, 3, 3);
+});
+
+ctx.moveTo(centerX, centerY);
+
+const jitteredSpiral = makeSpiral({
+  diameter: diagonal,
+});
+
+jitteredSpiral.forEach((vertex) => {
+  let [x, y] = vertex;
+  x += centerX;
+  y += centerY;
+  ctx.lineTo(x, y);
 });
 
 ctx.stroke();

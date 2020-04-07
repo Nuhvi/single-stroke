@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"body {\\n  font-family: Arial, Helvetica, sans-serif;\\n}\\n\\n#canvas {\\n  border: 1px solid rgb(255, 0, 0);\\n}\\n\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./src/main.css?./node_modules/css-loader/dist/cjs.js");
+eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"body {\\n  font-family: Arial, Helvetica, sans-serif;\\n}\\n\\n#canvas {\\n  border: 1px solid rgb(0, 0, 0);\\n}\\n\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./src/main.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -129,7 +129,7 @@ eval("\n\nvar isOldIE = function isOldIE() {\n  var memo;\n  return function mem
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./src/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _spiral_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spiral.js */ \"./src/spiral.js\");\n\n\n\n// props\nconst WIDTH = 500; // px\nlet HEIGHT = null; // px, null if square\n\n// derived\nHEIGHT = HEIGHT || WIDTH;\n\n// Setup\nconst c = document.getElementById('canvas');\nc.width = WIDTH;\nc.height = HEIGHT;\nconst ctx = c.getContext('2d');\nctx.moveTo(WIDTH / 2, HEIGHT / 2);\n\nconst diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);\n\nconst { spiralVerticies } = Object(_spiral_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n  diameter: diagonal,\n});\n\nspiralVerticies.forEach((vertex) => {\n  let [x, y] = vertex;\n  x += WIDTH / 2;\n  y += HEIGHT / 2;\n\n  ctx.lineTo(x, y);\n  ctx.strokeRect(x - 1.5, y - 1.5, 3, 3);\n});\n\nctx.stroke();\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./src/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _makeSpiral_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./makeSpiral.js */ \"./src/makeSpiral.js\");\n\n\n\n// props\nconst WIDTH = 500; // px\nlet HEIGHT = null; // px, null if square\n\n// derived\nHEIGHT = HEIGHT || WIDTH;\nconst centerX = WIDTH / 2;\nconst centerY = HEIGHT / 2;\n\n// Setup\nconst c = document.getElementById('canvas');\nc.width = WIDTH;\nc.height = HEIGHT;\nconst ctx = c.getContext('2d');\nctx.moveTo(centerX, centerY);\n\nconst diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);\n\nconst baseSpiral = Object(_makeSpiral_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n  diameter: diagonal,\n});\n\nbaseSpiral.forEach((vertex) => {\n  let [x, y] = vertex;\n  x += centerX;\n  y += centerY;\n\n  ctx.lineTo(x, y);\n});\n\nctx.moveTo(centerX, centerY);\n\nconst jitteredSpiral = Object(_makeSpiral_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n  diameter: diagonal,\n});\n\njitteredSpiral.forEach((vertex) => {\n  let [x, y] = vertex;\n  x += centerX;\n  y += centerY;\n  ctx.lineTo(x, y);\n});\n\nctx.stroke();\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -144,15 +144,15 @@ eval("var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtim
 
 /***/ }),
 
-/***/ "./src/spiral.js":
-/*!***********************!*\
-  !*** ./src/spiral.js ***!
-  \***********************/
+/***/ "./src/makeSpiral.js":
+/*!***************************!*\
+  !*** ./src/makeSpiral.js ***!
+  \***************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// Props\n\nconst VERTIX_DENSITY = 0.1; // vertices per pixel\nconst COILS_GAP = 10; // pixels\n\nconst calculateSpiralPath = ({ diameter }) => {\n  const beta = COILS_GAP / (2 * Math.PI);\n  const cordLength = 1 / VERTIX_DENSITY;\n  const spiralVerticies = [];\n\n  let theta = 1;\n  let r = beta * 2;\n\n  do {\n    const x = r * Math.cos(theta);\n    const y = r * Math.sin(theta);\n\n    spiralVerticies.push([x, y]);\n\n    theta += cordLength / r;\n    r = beta * theta;\n  } while (r < diameter / 2);\n\n  return { spiralVerticies };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (calculateSpiralPath);\n\n\n//# sourceURL=webpack:///./src/spiral.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst makeSpiral = ({ diameter = 500, vertexDensity = 0.5, coilsGap = 10 }) => {\n  const beta = coilsGap / (2 * Math.PI);\n  const cordLength = 1 / vertexDensity;\n  const spiralVerticies = [];\n\n  let theta = 1;\n  let r = beta * 2;\n\n  do {\n    const x = r * Math.cos(theta);\n    const y = r * Math.sin(theta);\n\n    spiralVerticies.push([x, y]);\n\n    theta += cordLength / r;\n    r = beta * theta;\n  } while (r < diameter / 2);\n  return spiralVerticies;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (makeSpiral);\n\n\n//# sourceURL=webpack:///./src/makeSpiral.js?");
 
 /***/ })
 
