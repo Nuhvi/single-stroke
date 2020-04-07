@@ -1,8 +1,8 @@
 // Props
 
-const RESOLUTION = 100;
+const RESOLUTION = 200;
 const radialSteps = RESOLUTION / 10; // Even & > 8
-const POLAR_TURNS = RESOLUTION; // eyeballed 6
+const POLAR_TURNS = 20;
 
 // derived
 
@@ -12,7 +12,7 @@ const calculateSpiralPath = (WIDTH, HEIGHT) => {
   const centerX = WIDTH / 2;
   const centerY = HEIGHT / 2;
   const diagonalLength = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
-  const polarGap = diagonalLength / POLAR_TURNS;
+  const polatGrowth = diagonalLength / ((POLAR_TURNS * radialSteps) / 2);
 
   let angle = angleIncrement;
   let r;
@@ -20,7 +20,7 @@ const calculateSpiralPath = (WIDTH, HEIGHT) => {
   const spiralVerticies = [];
 
   do {
-    r = polarGap * angle;
+    r = polatGrowth * angle;
     const x = centerX + r * Math.cos(angle);
     const y = centerY + r * Math.sin(angle);
     spiralVerticies.push([x, y]);
