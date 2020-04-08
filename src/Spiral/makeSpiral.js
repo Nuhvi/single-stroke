@@ -20,6 +20,7 @@ const makeSpiralPath = ({
     theta += cordLength / r;
     r = beta * theta;
   } while (r < diameter / 2);
+
   return spiralPath;
 };
 

@@ -1,3 +1,3 @@
-import SingleStroke from './SingleStroke.js';
+import SingleStroke from './SingleStroke';
 
 SingleStroke.start();

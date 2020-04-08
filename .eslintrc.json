@@ -17,6 +17,7 @@
     "eol-last": 0,
     "arrow-parens": [2, "always"],
     "import/extensions": [0, "ignorePackages"],
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "object-curly-newline": 0
   }
 }
