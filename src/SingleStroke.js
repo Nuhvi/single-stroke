@@ -21,20 +21,19 @@ const SingleStroke = (() => {
     });
   };
 
-  const modify = () => {
-    spiral.path.forEach((point) => {
+  const draw = () => {
+    spiral.points.forEach((point) => {
       const { x, y } = point;
       ctx.lineTo(x, y);
     });
-
-    // ctx.closePath();
-    // ctx.fill();
-    ctx.stroke();
   };
 
   const start = () => {
     init();
-    modify();
+    draw();
+    // ctx.closePath();
+    // ctx.fill();
+    ctx.stroke();
   };
 
   return {
