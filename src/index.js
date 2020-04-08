@@ -1,47 +1,45 @@
-import './main.css';
-import makeSpiral from './makeSpiral.js';
-import makeStroke from './makeStroke.js';
+import makeStroke from './utils/makeStroke.js';
+import newSpiral from './models/Spiral.js';
 
-// props
-const WIDTH = 500; // px
-let HEIGHT = null; // px, null if square
+const WIDTH = 500;
+const HEIGHT = WIDTH;
 
-// derived
-HEIGHT = HEIGHT || WIDTH;
-const centerX = WIDTH / 2;
-const centerY = HEIGHT / 2;
+let ctx;
+let centerX;
+let centerY;
 
-// Setup
-const c = document.getElementById('canvas');
-c.width = WIDTH;
-c.height = HEIGHT;
-const ctx = c.getContext('2d');
+const init = () => {
+  const c = document.getElementById('canvas');
+  c.width = WIDTH;
+  c.height = HEIGHT;
+  ctx = c.getContext('2d');
 
-const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
+  centerX = WIDTH / 2;
+  centerY = HEIGHT / 2;
+};
 
-const baseSpiral = makeSpiral({
-  diameter: diagonal,
-});
+const draw = () => {
+  const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
 
-// ctx.moveTo(centerX, centerY);
-// baseSpiral.forEach((vertex) => {
-//   let [x, y] = vertex;
-//   x += centerX;
-//   y += centerY;
+  const spiral = newSpiral({
+    diameter: diagonal,
+  });
 
-//   ctx.lineTo(x, y);
-// });
+  spiral.makeStroke();
 
-const offsetedSpiral = makeStroke({ path: baseSpiral });
+  ctx.moveTo(centerX, centerY);
+  spiral.path.forEach((point) => {
+    let { x, y } = point;
+    x += centerX;
+    y += centerY;
 
-ctx.moveTo(centerX, centerY);
-offsetedSpiral.forEach((vertex) => {
-  let [x, y] = vertex;
-  x += centerX;
-  y += centerY;
+    ctx.lineTo(x, y);
+  });
 
-  ctx.lineTo(x, y);
-});
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+};
 
-ctx.closePath();
-ctx.fill();
+init();
+draw();

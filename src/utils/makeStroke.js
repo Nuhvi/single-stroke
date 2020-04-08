@@ -1,15 +1,16 @@
-export const offsetPath = ({ path, offset = 1, direction = 1 }) => {
+export const offsetPath = ({ path, offset = 20, direction = 1 }) => {
   if (typeof offset === 'number') {
-    offset = path.map(() => [offset, offset]);
+    return path.map((point) => point);
   }
 
-  return path.map(([x, y], i) => [
-    x + offset[i][0] * direction,
-    y + offset[i][1] * direction,
-  ]);
+  return path.map((point, i) => {
+    point.x += offset[i][0] * direction;
+    point.y += offset[i][1] * direction;
+    return point;
+  });
 };
 
-const makeStroke = ({ path }) => {
+const makeStroke = (path) => {
   const postiveOffsetedPath = offsetPath({ path });
   const negativeOffsetedPath = offsetPath({ path, direction: -1 });
 
