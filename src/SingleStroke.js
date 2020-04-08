@@ -1,4 +1,4 @@
-import newSpiral from './models/Spiral';
+import newSpiral from './Spiral';
 
 const SingleStroke = (() => {
   const WIDTH = 500;

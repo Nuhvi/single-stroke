@@ -1,6 +1,11 @@
 import newPoint from '../Point';
 
-const makeSpiralPath = ({ center, diameter, vertexDensity, coilsGap }) => {
+const makeSpiralPath = ({
+  center = { x: 0, y: 0 },
+  diameter = 500,
+  vertexDensity = 0.5,
+  coilsGap = 10,
+}) => {
   const beta = coilsGap / (2 * Math.PI);
   const cordLength = 1 / vertexDensity;
   const spiralPath = [];
