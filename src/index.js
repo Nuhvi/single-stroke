@@ -1,4 +1,3 @@
-import makeStroke from './utils/makeStroke.js';
 import newSpiral from './models/Spiral.js';
 
 const WIDTH = 500;
@@ -25,19 +24,17 @@ const draw = () => {
     diameter: diagonal,
   });
 
-  spiral.makeStroke();
+  spiral.moveTo({ x: centerX, y: centerY });
 
   ctx.moveTo(centerX, centerY);
-  spiral.path.forEach((point) => {
-    let { x, y } = point;
-    x += centerX;
-    y += centerY;
 
+  spiral.path.forEach((point) => {
+    const { x, y } = point;
     ctx.lineTo(x, y);
   });
 
-  ctx.closePath();
-  ctx.fill();
+  // ctx.closePath();
+  // ctx.fill();
   ctx.stroke();
 };
 

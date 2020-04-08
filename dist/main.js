@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_makeStroke_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/makeStroke.js */ \"./src/utils/makeStroke.js\");\n/* harmony import */ var _models_Spiral_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./models/Spiral.js */ \"./src/models/Spiral.js\");\n\n\n\nconst WIDTH = 500;\nconst HEIGHT = WIDTH;\n\nlet ctx;\nlet centerX;\nlet centerY;\n\nconst init = () => {\n  const c = document.getElementById('canvas');\n  c.width = WIDTH;\n  c.height = HEIGHT;\n  ctx = c.getContext('2d');\n\n  centerX = WIDTH / 2;\n  centerY = HEIGHT / 2;\n};\n\nconst draw = () => {\n  const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);\n\n  const spiral = Object(_models_Spiral_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n    diameter: diagonal,\n  });\n\n  spiral.makeStroke();\n\n  ctx.moveTo(centerX, centerY);\n  spiral.path.forEach((point) => {\n    let { x, y } = point;\n    x += centerX;\n    y += centerY;\n\n    ctx.lineTo(x, y);\n  });\n\n  ctx.closePath();\n  ctx.fill();\n  ctx.stroke();\n};\n\ninit();\ndraw();\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _models_Spiral_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./models/Spiral.js */ \"./src/models/Spiral.js\");\n\n\nconst WIDTH = 500;\nconst HEIGHT = WIDTH;\n\nlet ctx;\nlet centerX;\nlet centerY;\n\nconst init = () => {\n  const c = document.getElementById('canvas');\n  c.width = WIDTH;\n  c.height = HEIGHT;\n  ctx = c.getContext('2d');\n\n  centerX = WIDTH / 2;\n  centerY = HEIGHT / 2;\n};\n\nconst draw = () => {\n  const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);\n\n  const spiral = Object(_models_Spiral_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n    diameter: diagonal,\n  });\n\n  spiral.moveTo({ x: centerX, y: centerY });\n\n  ctx.moveTo(centerX, centerY);\n\n  spiral.path.forEach((point) => {\n    const { x, y } = point;\n    ctx.lineTo(x, y);\n  });\n\n  // ctx.closePath();\n  // ctx.fill();\n  ctx.stroke();\n};\n\ninit();\ndraw();\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -106,7 +106,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst newPoint = ({ x = 0, y = 0 }) => ({\n  x,\n  y,\n});\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (newPoint);\n\n\n//# sourceURL=webpack:///./src/models/Point.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst newPoint = ({ center = { x: 0, y: 0 }, length = 0, angle = 0 }) => {\n  const x = center.x + length * Math.cos(angle);\n  const y = center.y + length * Math.sin(angle);\n\n  return {\n    get x() {\n      return x;\n    },\n    get y() {\n      return y;\n    },\n    moveTo(vector) {\n      if (vector.x === 0 && vector.y === 0) return this;\n      const center = { x: this.x + vector.x, y: this.y + vector.y };\n      return newPoint({\n        center,\n      });\n    },\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (newPoint);\n\n\n//# sourceURL=webpack:///./src/models/Point.js?");
 
 /***/ }),
 
@@ -118,31 +118,31 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst newPoint = ({ x = 0, y 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_makeSpiralPath_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/makeSpiralPath.js */ \"./src/utils/makeSpiralPath.js\");\n/* harmony import */ var _utils_makeStroke_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/makeStroke.js */ \"./src/utils/makeStroke.js\");\n\n\n\nconst newSpiral = ({ diameter = 500, vertexDensity = 0.5, coilsGap = 10 }) => {\n  let path = Object(_utils_makeSpiralPath_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({ diameter, vertexDensity, coilsGap });\n\n  return {\n    get path() {\n      return path;\n    },\n    makeStroke() {\n      path = Object(_utils_makeStroke_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(path);\n    },\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (newSpiral);\n\n\n//# sourceURL=webpack:///./src/models/Spiral.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_spiral_makeSpiralPath_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/spiral/makeSpiralPath.js */ \"./src/models/utils/spiral/makeSpiralPath.js\");\n/* harmony import */ var _utils_spiral_makeStroke_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/spiral/makeStroke.js */ \"./src/models/utils/spiral/makeStroke.js\");\n\n\n\nconst newSpiral = ({ diameter = 500, vertexDensity = 0.5, coilsGap = 10 }) => {\n  let path = Object(_utils_spiral_makeSpiralPath_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({ diameter, vertexDensity, coilsGap });\n\n  const moveTo = (vector) => {\n    path = path.map((point) => point.moveTo(vector));\n  };\n\n  return {\n    get path() {\n      return path;\n    },\n    makeStroke: _utils_spiral_makeStroke_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n    moveTo,\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (newSpiral);\n\n\n//# sourceURL=webpack:///./src/models/Spiral.js?");
 
 /***/ }),
 
-/***/ "./src/utils/makeSpiralPath.js":
-/*!*************************************!*\
-  !*** ./src/utils/makeSpiralPath.js ***!
-  \*************************************/
+/***/ "./src/models/utils/spiral/makeSpiralPath.js":
+/*!***************************************************!*\
+  !*** ./src/models/utils/spiral/makeSpiralPath.js ***!
+  \***************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _models_Point_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Point.js */ \"./src/models/Point.js\");\n\n\nconst makeSpiralPath = ({\n  diameter = 500,\n  vertexDensity = 0.5,\n  coilsGap = 10,\n}) => {\n  const beta = coilsGap / (2 * Math.PI);\n  const cordLength = 1 / vertexDensity;\n  const spiralPath = [];\n\n  let theta = 1;\n  let r = beta * 2;\n\n  do {\n    spiralPath.push(\n      Object(_models_Point_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n        x: r * Math.cos(theta),\n        y: r * Math.sin(theta),\n      }),\n    );\n\n    theta += cordLength / r;\n    r = beta * theta;\n  } while (r < diameter / 2);\n  return spiralPath;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (makeSpiralPath);\n\n\n//# sourceURL=webpack:///./src/utils/makeSpiralPath.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Point_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Point.js */ \"./src/models/Point.js\");\n\n\nconst makeSpiralPath = ({\n  diameter = 500,\n  vertexDensity = 0.5,\n  coilsGap = 10,\n}) => {\n  const beta = coilsGap / (2 * Math.PI);\n  const cordLength = 1 / vertexDensity;\n  const spiralPath = [];\n\n  let theta = 1;\n  let r = (beta + cordLength) / 2;\n\n  do {\n    const point = Object(_Point_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({ length: r, angle: theta });\n    spiralPath.push(point);\n\n    theta += cordLength / r;\n    r = beta * theta;\n  } while (r < diameter / 2);\n  return spiralPath;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (makeSpiralPath);\n\n\n//# sourceURL=webpack:///./src/models/utils/spiral/makeSpiralPath.js?");
 
 /***/ }),
 
-/***/ "./src/utils/makeStroke.js":
-/*!*********************************!*\
-  !*** ./src/utils/makeStroke.js ***!
-  \*********************************/
+/***/ "./src/models/utils/spiral/makeStroke.js":
+/*!***********************************************!*\
+  !*** ./src/models/utils/spiral/makeStroke.js ***!
+  \***********************************************/
 /*! exports provided: offsetPath, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"offsetPath\", function() { return offsetPath; });\nconst offsetPath = ({ path, offset = 20, direction = 1 }) => {\n  if (typeof offset === 'number') {\n    return path.map((point) => point);\n  }\n\n  return path.map((point, i) => {\n    point.x += offset[i][0] * direction;\n    point.y += offset[i][1] * direction;\n    return point;\n  });\n};\n\nconst makeStroke = (path) => {\n  const postiveOffsetedPath = offsetPath({ path });\n  const negativeOffsetedPath = offsetPath({ path, direction: -1 });\n\n  const combinedPath = [\n    ...postiveOffsetedPath,\n    ...negativeOffsetedPath.reverse(),\n  ];\n\n  return combinedPath;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (makeStroke);\n\n\n//# sourceURL=webpack:///./src/utils/makeStroke.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"offsetPath\", function() { return offsetPath; });\nconst offsetPath = ({ path, offset = 20, direction = 1 }) => {\n  if (typeof offset === 'number') {\n    return path.map((point) => point);\n  }\n\n  return path.map((point, i) => {\n    point.x += offset[i][0] * direction;\n    point.y += offset[i][1] * direction;\n    return point;\n  });\n};\n\nconst makeStroke = (path) => {\n  const postiveOffsetedPath = offsetPath({ path });\n  const negativeOffsetedPath = offsetPath({ path, direction: -1 });\n\n  const combinedPath = [\n    ...postiveOffsetedPath,\n    ...negativeOffsetedPath.reverse(),\n  ];\n\n  return combinedPath;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (makeStroke);\n\n\n//# sourceURL=webpack:///./src/models/utils/spiral/makeStroke.js?");
 
 /***/ })
 
