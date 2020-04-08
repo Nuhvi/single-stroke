@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/SingleStroke.js":
+/*!*****************************!*\
+  !*** ./src/SingleStroke.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _models_Spiral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./models/Spiral */ \"./src/models/Spiral/index.js\");\n\n\nvar SingleStroke = function () {\n  var WIDTH = 500;\n  var HEIGHT = WIDTH;\n  var ctx;\n  var centerX;\n  var centerY;\n\n  var init = function init() {\n    var c = document.getElementById('canvas');\n    c.width = WIDTH;\n    c.height = HEIGHT;\n    ctx = c.getContext('2d');\n    centerX = WIDTH / 2;\n    centerY = HEIGHT / 2;\n    var diagonal = Math.sqrt(Math.pow(WIDTH, 2) + Math.pow(HEIGHT, 2));\n    var spiral = Object(_models_Spiral__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n      diameter: diagonal\n    });\n    spiral.moveTo({\n      x: centerX,\n      y: centerY\n    });\n    spiral.path.forEach(function (point) {\n      var x = point.x,\n          y = point.y;\n      ctx.lineTo(x, y);\n    }); // ctx.closePath();\n    // ctx.fill();\n\n    ctx.stroke();\n  };\n\n  return {\n    init: init\n  };\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (SingleStroke);\n\n//# sourceURL=webpack:///./src/SingleStroke.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -94,7 +106,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _models_Spiral_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./models/Spiral/index.js */ \"./src/models/Spiral/index.js\");\n\nvar WIDTH = 500;\nvar HEIGHT = WIDTH;\nvar ctx;\nvar centerX;\nvar centerY;\n\nvar init = function init() {\n  var c = document.getElementById('canvas');\n  c.width = WIDTH;\n  c.height = HEIGHT;\n  ctx = c.getContext('2d');\n  centerX = WIDTH / 2;\n  centerY = HEIGHT / 2;\n};\n\nvar draw = function draw() {\n  var diagonal = Math.sqrt(Math.pow(WIDTH, 2) + Math.pow(HEIGHT, 2));\n  var spiral = Object(_models_Spiral_index_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n    diameter: diagonal\n  });\n  spiral.moveTo({\n    x: centerX,\n    y: centerY\n  });\n  ctx.moveTo(centerX, centerY);\n  spiral.path.forEach(function (point) {\n    var x = point.x,\n        y = point.y;\n    ctx.lineTo(x, y);\n  }); // ctx.closePath();\n  // ctx.fill();\n\n  ctx.stroke();\n};\n\ninit();\ndraw();\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _SingleStroke_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SingleStroke.js */ \"./src/SingleStroke.js\");\n\n_SingleStroke_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"].init();\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -106,7 +118,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mod
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nvar newPoint = function newPoint(_ref) {\n  var _ref$center = _ref.center,\n      center = _ref$center === void 0 ? {\n    x: 0,\n    y: 0\n  } : _ref$center,\n      _ref$length = _ref.length,\n      length = _ref$length === void 0 ? 0 : _ref$length,\n      _ref$angle = _ref.angle,\n      angle = _ref$angle === void 0 ? 0 : _ref$angle;\n  var x = center.x + length * Math.cos(angle);\n  var y = center.y + length * Math.sin(angle);\n  return {\n    get x() {\n      return x;\n    },\n\n    get y() {\n      return y;\n    },\n\n    moveTo: function moveTo(vector) {\n      if (vector.x === 0 && vector.y === 0) return this;\n      var center = {\n        x: this.x + vector.x,\n        y: this.y + vector.y\n      };\n      return newPoint({\n        center: center\n      });\n    }\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (newPoint);\n\n//# sourceURL=webpack:///./src/models/Point/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _moveTo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./moveTo */ \"./src/models/Point/moveTo.js\");\n\n\nvar newPoint = function newPoint(_ref) {\n  var _ref$center = _ref.center,\n      center = _ref$center === void 0 ? {\n    x: 0,\n    y: 0\n  } : _ref$center,\n      _ref$length = _ref.length,\n      length = _ref$length === void 0 ? 0 : _ref$length,\n      _ref$angle = _ref.angle,\n      angle = _ref$angle === void 0 ? 0 : _ref$angle;\n  var x = center.x + length * Math.cos(angle);\n  var y = center.y + length * Math.sin(angle);\n  return {\n    x: x,\n    y: y,\n    moveTo: _moveTo__WEBPACK_IMPORTED_MODULE_0__[\"default\"]\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (newPoint);\n\n//# sourceURL=webpack:///./src/models/Point/index.js?");
+
+/***/ }),
+
+/***/ "./src/models/Point/moveTo.js":
+/*!************************************!*\
+  !*** ./src/models/Point/moveTo.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return moveTo; });\nfunction moveTo(vector) {\n  if (vector.x === 0 && vector.y === 0) return this;\n  this.x += vector.x;\n  this.y += vector.y;\n  return this;\n}\n\n//# sourceURL=webpack:///./src/models/Point/moveTo.js?");
 
 /***/ }),
 
