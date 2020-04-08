@@ -5,8 +5,7 @@ const SingleStroke = (() => {
   const HEIGHT = WIDTH;
 
   let ctx;
-  let centerX;
-  let centerY;
+  let spiral;
 
   const init = () => {
     const c = document.getElementById('canvas');
@@ -14,17 +13,15 @@ const SingleStroke = (() => {
     c.height = HEIGHT;
     ctx = c.getContext('2d');
 
-    centerX = WIDTH / 2;
-    centerY = HEIGHT / 2;
-
     const diagonal = Math.sqrt(WIDTH ** 2 + HEIGHT ** 2);
 
-    const spiral = newSpiral({
+    spiral = newSpiral({
+      center: { x: WIDTH / 2, y: HEIGHT / 2 },
       diameter: diagonal,
     });
+  };
 
-    spiral.moveTo({ x: centerX, y: centerY });
-
+  const modify = () => {
     spiral.path.forEach((point) => {
       const { x, y } = point;
       ctx.lineTo(x, y);
@@ -35,8 +32,13 @@ const SingleStroke = (() => {
     ctx.stroke();
   };
 
+  const start = () => {
+    init();
+    modify();
+  };
+
   return {
-    init,
+    start,
   };
 })();
 
