@@ -1,4 +1,4 @@
-import newSpiral from './models/Spiral.js';
+import newSpiral from './models/Spiral/index.js';
 
 const WIDTH = 500;
 const HEIGHT = WIDTH;

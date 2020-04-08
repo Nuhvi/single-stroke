@@ -1,4 +1,4 @@
-import newPoint from '../../Point.js';
+import newPoint from '../Point';
 
 const makeSpiralPath = ({
   diameter = 500,
