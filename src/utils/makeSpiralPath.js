@@ -10,15 +10,11 @@ const makeSpiralPath = ({
   const spiralPath = [];
 
   let theta = 1;
-  let r = beta * 2;
+  let r = (beta + cordLength) / 2;
 
   do {
-    spiralPath.push(
-      newPoint({
-        x: r * Math.cos(theta),
-        y: r * Math.sin(theta),
-      }),
-    );
+    const point = newPoint({ length: r, angle: theta });
+    spiralPath.push(point);
 
     theta += cordLength / r;
     r = beta * theta;
