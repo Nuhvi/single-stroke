@@ -122,15 +122,27 @@ eval("__webpack_require__.r(__webpack_exports__);\n// copied some Vector.js func
 
 /***/ }),
 
-/***/ "./src/SingleStroke.js":
-/*!*****************************!*\
-  !*** ./src/SingleStroke.js ***!
-  \*****************************/
+/***/ "./src/SingleStroke/createCanvas.js":
+/*!******************************************!*\
+  !*** ./src/SingleStroke/createCanvas.js ***!
+  \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Spiral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Spiral */ \"./src/Spiral/index.js\");\nfunction _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(n); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nfunction _iterableToArrayLimit(arr, i) { if (typeof Symbol === \"undefined\" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\n\n\nvar SingleStroke = function () {\n  var ctx;\n  var spiral;\n\n  var loadIMG = function loadIMG(canvas) {\n    var offsetWidth = canvas.offsetWidth;\n    var img = document.createElement('img');\n    img.src = canvas.attributes.src.value; // TODO remove the image\n\n    img.width = 500;\n    document.body.appendChild(img);\n    var aspectRatio = img.height / img.width;\n    return [offsetWidth, aspectRatio * offsetWidth];\n  };\n\n  var init = function init() {\n    var canvas = document.getElementById('canvas');\n\n    var _loadIMG = loadIMG(canvas),\n        _loadIMG2 = _slicedToArray(_loadIMG, 2),\n        width = _loadIMG2[0],\n        height = _loadIMG2[1];\n\n    canvas.width = width;\n    canvas.height = height;\n    ctx = canvas.getContext('2d');\n    var diagonal = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));\n    spiral = Object(_Spiral__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n      center: {\n        x: width / 2,\n        y: height / 2\n      },\n      diameter: diagonal\n    });\n  };\n\n  var draw = function draw() {\n    spiral.jitter({});\n    spiral.points.forEach(function (point) {\n      var x = point.x,\n          y = point.y;\n      ctx.lineTo(x, y);\n    });\n  };\n\n  var start = function start() {\n    init();\n    draw(); // ctx.closePath();\n    // ctx.fill();\n\n    ctx.stroke();\n  };\n\n  return {\n    start: start\n  };\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (SingleStroke);\n\n//# sourceURL=webpack:///./src/SingleStroke.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nvar setCanvasDimensions = function setCanvasDimensions(canvas, img) {\n  var width;\n  var height;\n\n  if (canvas.attributes.height) {\n    var offsetHeight = canvas.offsetHeight;\n    var aspectRatio = img.width / img.height;\n    width = aspectRatio * offsetHeight;\n    height = offsetHeight;\n  } else {\n    var offsetWidth = canvas.offsetWidth;\n\n    var _aspectRatio = img.height / img.width;\n\n    width = offsetWidth;\n    height = _aspectRatio * offsetWidth;\n  }\n\n  var _ref = [width, height];\n  canvas.width = _ref[0];\n  canvas.height = _ref[1];\n  return canvas;\n};\n\nvar loadImage = function loadImage(imageSrc) {\n  var img = document.createElement('img');\n  img.style = 'display:none';\n  img.src = imageSrc;\n  document.body.appendChild(img);\n  return img;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (function () {\n  var canvas = document.querySelector('canvas');\n  var img = loadImage(canvas.attributes.src.value);\n  setCanvasDimensions(canvas, img);\n  return canvas;\n});\n\n//# sourceURL=webpack:///./src/SingleStroke/createCanvas.js?");
+
+/***/ }),
+
+/***/ "./src/SingleStroke/index.js":
+/*!***********************************!*\
+  !*** ./src/SingleStroke/index.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Spiral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Spiral */ \"./src/Spiral/index.js\");\n/* harmony import */ var _createCanvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createCanvas */ \"./src/SingleStroke/createCanvas.js\");\n\n\n\nvar SingleStroke = function () {\n  var c = Object(_createCanvas__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\n  var ctx = c.getContext('2d');\n  var spiral;\n\n  var init = function init() {\n    var diagonal = Math.sqrt(Math.pow(c.width, 2) + Math.pow(c.height, 2));\n    spiral = Object(_Spiral__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({\n      center: {\n        x: c.width / 2,\n        y: c.height / 2\n      },\n      diameter: diagonal\n    });\n  };\n\n  var draw = function draw() {\n    spiral.jitter({});\n    spiral.points.forEach(function (point) {\n      var x = point.x,\n          y = point.y;\n      ctx.lineTo(x, y);\n    });\n  };\n\n  var start = function start() {\n    init();\n    draw(); // ctx.closePath();\n    // ctx.fill();\n\n    ctx.stroke();\n  };\n\n  return {\n    start: start\n  };\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (SingleStroke);\n\n//# sourceURL=webpack:///./src/SingleStroke/index.js?");
 
 /***/ }),
 
@@ -166,7 +178,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Poi
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _SingleStroke__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SingleStroke */ \"./src/SingleStroke.js\");\n\n_SingleStroke__WEBPACK_IMPORTED_MODULE_0__[\"default\"].start();\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _SingleStroke__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SingleStroke */ \"./src/SingleStroke/index.js\");\n\n_SingleStroke__WEBPACK_IMPORTED_MODULE_0__[\"default\"].start();\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
