@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SingleStroke {
+        "hostId": string;
         /**
           * The image src
          */
@@ -26,6 +27,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface SingleStroke {
+        "hostId"?: string;
         /**
           * The image src
          */

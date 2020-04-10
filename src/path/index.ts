@@ -11,21 +11,6 @@ const Path = (_points: Point[] = []): Path => {
     return p1.clone().add(p3).divide(2).subtract(p2).normalize();
   }
 
-  function calculateNormalsAll(): void {
-    [..._points].forEach((_, i) => {
-      if (i >= _points.length - 2) return;
-      const vertexNormal = this.calculateNormalAt(i);
-
-      _vertexNormals.push(vertexNormal);
-    });
-
-    _vertexNormals = [
-      _points[0].clone().normalize(),
-      ..._vertexNormals,
-      _points.slice(-1)[0].clone().normalize(),
-    ];
-  }
-
   function offset(): void {
     _points = _vertexNormals.map((normal, i) => {
       const point = _points[i];
@@ -51,7 +36,6 @@ const Path = (_points: Point[] = []): Path => {
       return _vertexNormals;
     },
     calculateNormalAt,
-    calculateNormalsAll,
     offset,
     jitter,
   };
