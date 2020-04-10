@@ -50,9 +50,18 @@ describe("Point", () => {
       expect(p1.multiply({ x: 1, y: 1 })).toEqual(p1);
     });
 
-    it("multiplies x and y params by a value", () => {
+    it("multiplies x and y params by a positive value", () => {
       p1.multiply(randVal);
       expect([p1.x, p1.y]).toEqual([randVal * 5, randVal * 5]);
+    });
+
+    it("habdl x and y params by a negative value", () => {
+      p1.multiply(-randVal);
+      p1.multiply(-randVal);
+      expect([p1.x, p1.y]).toEqual([
+        5 * randVal * randVal,
+        5 * randVal * randVal,
+      ]);
     });
 
     it("multiplies a value to the p1 x and y params", () => {

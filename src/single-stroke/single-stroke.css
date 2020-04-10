@@ -1,4 +1,6 @@
-:host {
+single-stroke {
   display: block;
+}
+canvas {
   border: 1px solid black;
 }

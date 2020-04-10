@@ -1,26 +1,27 @@
-import { Component, Prop, h, Host } from "@stencil/core";
-import { createHelperCanvas } from "../utils/index";
+import { Component, Prop, h, getAssetPath, Host } from "@stencil/core";
+import singleStoke from "../scripts/index";
 @Component({
   tag: "single-stroke",
   styleUrl: "single-stroke.css",
+  assetsDirs: ["assets"],
 })
 export class SingleStroke {
   /**
    * The image src
    */
-  @Prop() src: string;
   @Prop() hostId: string = `single-stroke-${Math.floor(
     Math.random() * 1000000
   )}`;
 
   componentDidLoad() {
     const host = document.getElementById(this.hostId);
-    const helperCanvas = createHelperCanvas({ host, src: this.src });
+    host.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = getAssetPath(`./assets/test.png`);
 
-    const pixelData = helperCanvas.getContext("2d").getImageData(20, 20, 1, 1)
-      .data;
-
-    console.log(pixelData);
+    img.onload = () => {
+      singleStoke.run(host, img);
+    };
   }
 
   render() {

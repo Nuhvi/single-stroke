@@ -17,8 +17,6 @@ interface Point {
 
 interface Path {
   points: Point[];
-  vertexNormals: Point[];
-  calculateNormalAt: Function;
-  offset: Function;
-  jitter: Function;
+  displace: Function;
+  getNormalAt: Function;
 }
