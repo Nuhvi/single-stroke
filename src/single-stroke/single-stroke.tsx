@@ -1,5 +1,4 @@
 import { Component, Prop, h } from "@stencil/core";
-import createCanvas from "../SingleStroke/createCanvas.js";
 
 @Component({
   tag: "single-stroke",
