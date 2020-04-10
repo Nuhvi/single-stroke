@@ -1,5 +1,5 @@
 import Point from "./index";
-import { hypotenuseLength, deg2Radian } from "../utils/utils";
+import { hypotenuseLength, deg2Radian } from "../utils";
 
 let p1;
 let randVal = Math.random();
@@ -91,6 +91,11 @@ describe("Point", () => {
       const normalized = p1.divide(length);
 
       expect(p1.normalize()).toEqual(normalized);
+    });
+
+    it("returns the same vector if its length is zero", () => {
+      const p = Point();
+      expect(p.normalize()).toBe(p);
     });
   });
 

@@ -3,18 +3,13 @@
 // And Paper.js
 // https://github.com/paperjs/paper.js/blob/9206135a1f9fed1241ee8c9964c8b13bb0e57743/src/basic/Point.js
 
-import { sanitizeVector, deg2Radian, hypotenuseLength } from "../utils/utils";
-
-interface Vector {
-  x: number;
-  y: number;
-}
+import { sanitizeVector, deg2Radian, hypotenuseLength } from "../utils";
 
 const Point = (params?: {
   center: Vector;
   length?: number;
   angle?: number;
-}) => {
+}): Point => {
   let { center = { x: 0, y: 0 }, length = 0, angle = 0 } = {
     ...params,
   };

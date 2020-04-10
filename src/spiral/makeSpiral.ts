@@ -1,4 +1,4 @@
-import newPoint from '../Point';
+import newPoint from "../point";
 
 const makeSpiralPath = ({
   center = { x: 0, y: 0 },

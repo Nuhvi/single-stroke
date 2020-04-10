@@ -1,5 +1,5 @@
-import makeSpiral from './makeSpiral';
-import Path from '../Path';
+import makeSpiral from "./makeSpiral";
+import Path from "../path";
 
 const newSpiral = (params) => {
   const points = makeSpiral(params);

@@ -1,4 +1,4 @@
-import { deg2Radian, sanitizeVector, hypotenuseLength } from "./utils";
+import { deg2Radian, sanitizeVector, hypotenuseLength } from ".";
 
 let randVal = Math.random();
 

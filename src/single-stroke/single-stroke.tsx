@@ -1,4 +1,5 @@
 import { Component, Prop, h } from "@stencil/core";
+import SS from "../SingleStroke";
 
 @Component({
   tag: "single-stroke",
@@ -12,6 +13,8 @@ export class SingleStroke {
   @Prop() src: string;
 
   render() {
+    SS.start(this.src);
+
     return <div></div>;
   }
 }

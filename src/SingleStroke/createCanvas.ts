@@ -15,17 +15,18 @@ const setCanvasDimensions = (canvas, img) => {
 };
 
 const loadImage = (imageSrc) => {
-  const img = document.createElement('img');
-  img.style = 'display:none';
+  const img = document.createElement("img");
+  img.style.display = "none";
   img.src = imageSrc;
   document.body.appendChild(img);
 
   return img;
 };
 
-export default () => {
-  const canvas = document.querySelector('canvas');
-  const img = loadImage(canvas.attributes.src.value);
+export default (src) => {
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  const img = loadImage(src);
 
   setCanvasDimensions(canvas, img);
 
