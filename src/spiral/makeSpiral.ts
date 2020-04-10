@@ -10,15 +10,16 @@ const makeSpiralPath = ({
   const cordLength = 1 / vertexDensity;
   const spiralPath = [];
 
-  let theta = 1;
-  let r = (beta + cordLength) / 2;
+  let r = 0;
+  let theta = 0;
 
   do {
+    // Smooth spiral beggining https://stackoverflow.com/a/13901170/12278935
+    theta +=
+      (-2 * r + Math.sqrt(4 * r * r + 8 * beta * cordLength)) / (2 * beta);
+    r = beta * theta;
     const point = newPoint({ center, length: r, angle: theta });
     spiralPath.push(point);
-
-    theta += cordLength / r;
-    r = beta * theta;
   } while (r < diameter / 2);
 
   return spiralPath;

@@ -1,15 +1,12 @@
+import Point from "../point/index";
+
 const Path = (_points: Point[] = []): Path => {
   let _vertexNormals = [];
 
   function calculateNormalAt(index: number): Point {
-    let [p1, p3] = [_points[index - 1], _points[index + 1]];
-    const p2 = _points[index];
+    let [p1, p2, p3] = [_points[index - 1], _points[index], _points[index + 1]];
 
-    if (index === 0) {
-      [p1, p3] = [p2, _points[index + 1]];
-    } else if (index === _points.length - 1) {
-      [p1, p3] = [_points[index - 1], p2];
-    }
+    if (!p1 || !p3) return Point();
 
     return p1.clone().add(p3).divide(2).subtract(p2).normalize();
   }
