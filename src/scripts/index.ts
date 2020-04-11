@@ -1,4 +1,5 @@
 import Spiral from "../spiral";
+import { blur } from "../utils";
 
 const SingleStroke = (() => {
   const setup = ({ canvas, img }) => {
@@ -36,24 +37,25 @@ const SingleStroke = (() => {
   };
 
   const draw = ({ ctx, spiral, imgValues }) => {
-    spiral.displace(imgValues, 10);
-    spiral.points.forEach((point) => {
-      ctx.lineTo(point.x, point.y);
-    });
-  };
-
-  const run = (canvas, img) => {
-    const [ctx, width, height] = setup({ canvas, img });
-    const spiral = setBaseSpiral({ width, height });
-    let imgValues = getImageValues({ canvas, img, spiral });
-    draw({ ctx, spiral, imgValues });
-    // ctx.closePath();
-    // ctx.fill();
-    ctx.stroke();
+    const map = imgValues;
+    spiral
+      .displace({ map: blur(imgValues, 5), strength: 10 })
+      .createStroke({ map, thickness: 10 })
+      .points.forEach((point) => {
+        ctx.lineTo(point.x, point.y);
+      });
   };
 
   return {
-    run,
+    run: (canvas, img) => {
+      const [ctx, width, height] = setup({ canvas, img });
+      const spiral = setBaseSpiral({ width, height });
+      let imgValues = getImageValues({ canvas, img, spiral });
+      draw({ ctx, spiral, imgValues });
+      ctx.closePath();
+      ctx.fill();
+      // ctx.stroke();
+    },
   };
 })();
 

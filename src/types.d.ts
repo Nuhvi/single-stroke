@@ -19,4 +19,5 @@ interface Path {
   points: Point[];
   displace: Function;
   getNormalAt: Function;
+  createStroke: Function;
 }

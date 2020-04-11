@@ -1,4 +1,4 @@
-import { deg2Radian, sanitizeVector, hypotenuseLength } from ".";
+import { deg2Radian, sanitizeVector, hypotenuseLength, blur } from ".";
 
 let randVal = Math.random();
 
@@ -35,5 +35,24 @@ describe("sanitizeVector()", () => {
     it("returns an object with x and y equal to the given value", () => {
       expect(sanitizeVector(randVal)).toEqual({ x: randVal, y: randVal });
     });
+  });
+});
+
+describe("blur()", () => {
+  let arr;
+  beforeEach(() => {
+    arr = [10, 0, 10, 0, 10, 0];
+  });
+
+  it("returns same array if power equal 0", () => {
+    expect(blur(arr, 0)).toEqual([10, 0, 10, 0, 10, 0]);
+  });
+
+  it("returns a blurred array", () => {
+    expect(blur(arr, 1)).toEqual([10, 10, 10, 10, 10, 10]);
+  });
+
+  it("returns a blurred array", () => {
+    expect(blur(arr, 2)).toEqual([5, 10, 5, 10, 5, 5]);
   });
 });
