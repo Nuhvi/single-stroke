@@ -1,8 +1,11 @@
 single-stroke {
   display: block;
   position: relative;
-  min-width: 500px;
   border: 1px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 single-stroke canvas {
