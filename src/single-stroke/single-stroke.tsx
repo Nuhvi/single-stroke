@@ -1,4 +1,4 @@
-import { Component, Prop, h, getAssetPath, Host } from "@stencil/core";
+import { Component, Prop, h, getAssetPath, Host, State } from "@stencil/core";
 import singleStoke from "../scripts/index";
 @Component({
   tag: "single-stroke",
@@ -7,24 +7,32 @@ import singleStoke from "../scripts/index";
 })
 export class SingleStroke {
   /**
-   * The image src
+   * Unique Id
    */
-  @Prop() hostId: string = `single-stroke-${Math.floor(
-    Math.random() * 1000000
-  )}`;
+  @Prop() uid: string = `single-stroke-${Math.floor(Math.random() * 1000000)}`;
+
+  @State() imageLoaded = false;
 
   componentDidLoad() {
-    const host = document.getElementById(this.hostId);
-    host.innerHTML = "";
+    const canvas = document.getElementById(this.uid).querySelector("canvas");
     const img = document.createElement("img");
-    img.src = getAssetPath(`./assets/test.png`);
+    img.src = getAssetPath(`./assets/place-holder.png`);
 
     img.onload = () => {
-      singleStoke.run(host, img);
+      this.imageLoaded = true;
+      singleStoke.run(canvas, img);
     };
   }
 
   render() {
-    return <Host id={this.hostId}></Host>;
+    return (
+      <Host id={this.uid}>
+        <div class={`overlay ${this.imageLoaded ? "hidden" : ""}`}>
+          <h2>Single Stroke</h2>
+          <h3>by: Ar Nazeh</h3>
+        </div>
+        <canvas></canvas>
+      </Host>
+    );
   }
 }

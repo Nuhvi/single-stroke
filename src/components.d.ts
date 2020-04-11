@@ -8,9 +8,9 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SingleStroke {
         /**
-          * The image src
+          * Unique Id
          */
-        "hostId": string;
+        "uid": string;
     }
 }
 declare global {
@@ -27,9 +27,9 @@ declare global {
 declare namespace LocalJSX {
     interface SingleStroke {
         /**
-          * The image src
+          * Unique Id
          */
-        "hostId"?: string;
+        "uid"?: string;
     }
     interface IntrinsicElements {
         "single-stroke": SingleStroke;

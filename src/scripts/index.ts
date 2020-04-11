@@ -1,7 +1,6 @@
 import Spiral from "../spiral";
 
 const SingleStroke = (() => {
-  let host;
   let img;
   let canvas;
   let ctx;
@@ -11,10 +10,7 @@ const SingleStroke = (() => {
   let height;
 
   const setup = () => {
-    canvas = document.createElement("canvas");
-    host.appendChild(canvas);
-
-    canvas.width = host.offsetWidth;
+    canvas.width = canvas.parentElement.offsetWidth;
     canvas.height = (canvas.width * img.height) / img.width;
 
     [width, height] = [canvas.width, canvas.height];
@@ -49,14 +45,14 @@ const SingleStroke = (() => {
   };
 
   const draw = () => {
-    spiral.displace(imgValues, 5);
+    spiral.displace(imgValues, 10);
     spiral.points.forEach((point) => {
       ctx.lineTo(point.x, point.y);
     });
   };
 
-  const run = (_host, _img) => {
-    host = _host;
+  const run = (_canvas, _img) => {
+    canvas = _canvas;
     img = _img;
     setup();
     setBaseSpiral();

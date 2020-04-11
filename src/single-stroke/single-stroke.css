@@ -1,6 +1,30 @@
 single-stroke {
   display: block;
-}
-canvas {
+  position: relative;
+  min-width: 500px;
   border: 1px solid black;
+}
+
+single-stroke canvas {
+  display: block;
+}
+
+single-stroke .overlay {
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+single-stroke .overlay.hidden {
+  visibility: hidden;
 }
