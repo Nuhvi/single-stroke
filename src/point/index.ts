@@ -5,22 +5,18 @@
 
 import { sanitizeVector, deg2Radian, hypotenuseLength } from "../utils";
 
-const Point = (params?: {
-  center: Vector;
-  length?: number;
-  angle?: number;
-}): Point => {
-  let { center = { x: 0, y: 0 }, length = 0, angle = 0 } = {
-    ...params,
-  };
-
-  let _x = center.x + length * Math.cos(angle);
-  let _y = center.y + length * Math.sin(angle);
+const Point = ({
+  center = { x: 0, y: 0 },
+  length = 0,
+  angle = 0,
+} = {}): Point => {
+  let x = center.x + length * Math.cos(angle);
+  let y = center.y + length * Math.sin(angle);
 
   function add(vector: Vector = { x: 0, y: 0 }) {
     vector = sanitizeVector(vector);
-    _x += vector.x;
-    _y += vector.y;
+    x += vector.x;
+    y += vector.y;
 
     return this;
   }
@@ -33,8 +29,8 @@ const Point = (params?: {
 
   function multiply(vector: Vector = { x: 1, y: 1 }) {
     vector = sanitizeVector(vector);
-    _x *= vector.x;
-    _y *= vector.y;
+    x *= vector.x;
+    y *= vector.y;
 
     return this;
   }
@@ -50,40 +46,40 @@ const Point = (params?: {
     if (angle === 0) return this;
     angle = deg2Radian(angle);
 
-    _x -= center.x;
-    _y -= center.y;
+    x -= center.x;
+    y -= center.y;
 
     const sin = Math.sin(angle);
     const cos = Math.cos(angle);
 
-    const newX = _x * cos - _y * sin;
-    const newY = _x * sin + _y * cos;
+    const newX = x * cos - y * sin;
+    const newY = x * sin + y * cos;
 
-    _x = newX + center.x;
-    _y = newY + center.y;
+    x = newX + center.x;
+    y = newY + center.y;
 
     return this;
   }
 
   function normalize() {
-    length = hypotenuseLength(_x, _y);
+    length = hypotenuseLength(x, y);
 
     this.divide(length);
     return this;
   }
 
   function clone() {
-    const clone = Point({ center: { x: _x, y: _y } });
+    const clone = Point({ center: { x, y } });
 
     return clone;
   }
 
-  return {
+  return Object.freeze({
     get x() {
-      return _x;
+      return x;
     },
     get y() {
-      return _y;
+      return y;
     },
     add,
     subtract,
@@ -92,7 +88,7 @@ const Point = (params?: {
     clone,
     normalize,
     rotate,
-  };
+  });
 };
 
 export default Point;
