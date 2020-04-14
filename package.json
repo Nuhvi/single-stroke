@@ -1,18 +1,28 @@
 {
-  "name": "p5-typescript-boilerplate",
+  "name": "singlestroke",
   "version": "1.0.0",
+  "description": "Generative art app 🎨 built with ❤️ using p5.js",
+  "keywords": [
+    "generative",
+    "art",
+    "p5.js",
+    "p5js",
+    "single",
+    "stroke",
+    "one"
+  ],
+  "author": "Ar Nazeh <ar.nazeh@gmail.com> (https://www.Nazeh.me/)",
   "scripts": {
-    "description": "P5.js boilerplate with Typescript support and Webpack 4 enabled.",
     "build": "webpack",
     "start": "webpack-dev-server",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nathan-kansu/p5-ts.git"
+    "url": "git+https://github.com/nazeh/single-stroke.git"
   },
   "license": "MIT",
-  "homepage": "https://github.com/nathan-kansu/p5-ts#readme",
+  "homepage": "https://github.com/nazeh/single-stroke#readme",
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
