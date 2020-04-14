@@ -19,7 +19,7 @@ const sketch = (p5: p5) => {
     quality: 100,
   });
   let canvas: HTMLElement | null;
-  let exportAnimation: Boolean = true;
+  let exportAnimation: Boolean = false;
   let shapes: ShapesInterface;
 
   p5.setup = () => {

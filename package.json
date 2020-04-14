@@ -5,7 +5,7 @@
     "description": "P5.js boilerplate with Typescript support and Webpack 4 enabled.",
     "build": "webpack",
     "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -14,6 +14,9 @@
   "license": "MIT",
   "homepage": "https://github.com/nathan-kansu/p5-ts#readme",
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
     "@types/p5": "^0.7.2",
     "clean-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^5.0.1",
@@ -21,6 +24,7 @@
     "file-loader": "^3.0.1",
     "html-webpack-include-assets-plugin": "^1.0.7",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^25.3.0",
     "mini-css-extract-plugin": "^0.5.0",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.3333",
