@@ -1,6 +1,8 @@
 import * as p5 from 'p5';
-import Shapes from './Shapes';
-import { ShapesInterface } from './interfaces';
+import Spiral from './Spiral';
+import createLayout from './layout/index';
+import { SpiralInterface } from './interfaces';
+const placeholderImg = require('./assets/placeholder.png');
 
 import {
   CANVAS_HEIGHT,
@@ -20,15 +22,16 @@ const sketch = (p5: p5) => {
   });
   let canvas: HTMLElement | null;
   let exportAnimation: Boolean = false;
-  let shapes: ShapesInterface;
+  let spiral: SpiralInterface;
+  let img: p5.Image;
 
   p5.setup = () => {
     p5.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     p5.frameRate(FRAME_RATE);
     canvas = document.getElementById(CANVAS_ID);
-    shapes = new Shapes(p5);
+    spiral = new Spiral(p5);
 
-    shapes.render();
+    spiral.render();
 
     if (exportAnimation) {
       capturer.start();
@@ -37,14 +40,15 @@ const sketch = (p5: p5) => {
 
   p5.draw = () => {
     p5.background(COLOR_BACKGROUND);
-    shapes.render();
+
+    spiral.render();
 
     if (exportAnimation) {
       if (canvas) {
         capturer.capture(canvas);
       }
 
-      if (shapes.isAnimationComplete) {
+      if (spiral.isAnimationComplete) {
         p5.noLoop();
         capturer.stop();
         capturer.save();
@@ -53,4 +57,5 @@ const sketch = (p5: p5) => {
   };
 };
 
+createLayout();
 new p5(sketch);

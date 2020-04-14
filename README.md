@@ -1,4 +1,4 @@
-# P5.js Typescript Boilerplate
+# Single Stroke
 
 Generative art app 🎨 built with ❤️ using p5.js.
 

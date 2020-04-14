@@ -1,6 +1,4 @@
-export interface ShapeInterface {}
-
-export interface ShapesInterface {
+export interface SpiralInterface {
   isAnimationComplete: boolean;
   render(): void;
 }
