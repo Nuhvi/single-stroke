@@ -10,20 +10,28 @@ export default (
     },
     diameter = 500,
     vertexDensity = 0.001,
-    coilsGap = 100,
+    coilsGap = 10,
+    acceleration = 0.1,
   } = {},
   p5: p5,
 ) => {
-  const points: p5.Vector[] = [p5.createVector(center.x, center.y)];
-
-  let isAnimationComplete: boolean = false;
-  // To control masking the center
-  let centerMask: number = 1;
-
+  // base Spiral variables
   const beta = coilsGap / (2 * Math.PI);
   const cordLength = Math.min(1 / vertexDensity, coilsGap);
+
+  // iterables
   let r = 1;
   let theta = 0;
+  let steps = 1;
+
+  // points arrays
+  const points: p5.Vector[] = [p5.createVector(center.x, center.y)];
+
+  // booleans
+  let isAnimationComplete: boolean = false;
+
+  //  masks
+  let centerMask: number = 0;
 
   const updateAnimationCompleteStatus = (): void => {
     const p = points[points.length - 1];
@@ -31,13 +39,12 @@ export default (
   };
 
   const updateCenterMask = (): void => {
-    if (centerMask > 0) centerMask = Math.max(1 - r / (coilsGap * 2), 0);
+    if (centerMask < 1) centerMask = Math.min(r / (coilsGap * 2), 1);
   };
 
   const calculateBaseSpiralPoint = () => {
-    const smoothCenterModifier = (centerMask * coilsGap) / 2 / r;
-
-    theta += centerMask ? cordLength / coilsGap / 2 : cordLength / r;
+    // Use center mask to smooth the center coil
+    theta += centerMask < 1 ? cordLength / coilsGap / 2 : cordLength / r;
     r = beta * theta;
 
     let x = center.x + r * Math.cos(theta);
@@ -46,7 +53,6 @@ export default (
   };
 
   const renderLastSegment = () => {
-    // p5.strokeWeight(centerMask);
     const p1 = points[points.length - 2];
     const p2 = points[points.length - 1];
     p5.line(p1.x, p1.y, p2.x, p2.y);
@@ -59,10 +65,19 @@ export default (
     return point;
   };
 
+  const renderStepsAtAtime = () => {
+    let s = steps;
+    do {
+      calculateNextPoint();
+      renderLastSegment();
+      updateCenterMask();
+      s -= 1;
+    } while (s > 0);
+    steps *= 1 + acceleration;
+  };
+
   const render = () => {
-    calculateNextPoint();
-    renderLastSegment();
-    updateCenterMask();
+    renderStepsAtAtime();
     updateAnimationCompleteStatus();
     if (isAnimationComplete) p5.noLoop();
   };
