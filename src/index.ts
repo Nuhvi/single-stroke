@@ -1,12 +1,11 @@
 import * as p5 from 'p5';
-import Spiral from './Spiral';
+import Spiral from './spiral/index';
 import createLayout from './layout/index';
 import { SpiralInterface } from './interfaces';
 const placeholderImg = require('./assets/placeholder.png');
 
 import {
   CANVAS_HEIGHT,
-  CANVAS_ID,
   CANVAS_WIDTH,
   COLOR_BACKGROUND,
   FRAME_RATE,
@@ -26,10 +25,20 @@ const sketch = (p5: p5) => {
   let img: p5.Image;
 
   p5.setup = () => {
-    p5.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    const canvas = p5.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     p5.frameRate(FRAME_RATE);
-    canvas = document.getElementById(CANVAS_ID);
-    spiral = new Spiral(p5);
+
+    canvas.dragOver(() => {
+      p5.background('red');
+    });
+
+    canvas.dragLeave(() => {
+      p5.background(COLOR_BACKGROUND);
+    });
+
+    canvas.drop(() => {});
+
+    spiral = Spiral();
 
     spiral.render();
 
@@ -39,8 +48,6 @@ const sketch = (p5: p5) => {
   };
 
   p5.draw = () => {
-    p5.background(COLOR_BACKGROUND);
-
     spiral.render();
 
     if (exportAnimation) {
