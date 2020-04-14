@@ -1,33 +1,35 @@
 {
-  "name": "singlestroke",
-  "version": "0.0.1",
-  "description": "Stencil Component Starter",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
-  "types": "dist/types/index.d.ts",
-  "collection": "dist/collection/collection-manifest.json",
-  "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/singlestroke/singlestroke.js",
-  "files": [
-    "dist/",
-    "loader/"
-  ],
+  "name": "p5-typescript-boilerplate",
+  "version": "1.0.0",
   "scripts": {
-    "build": "stencil build --docs",
-    "start": "stencil build --dev --watch --serve",
-    "test": "stencil test --spec --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "description": "P5.js boilerplate with Typescript support and Webpack 4 enabled.",
+    "build": "webpack",
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathan-kansu/p5-ts.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/nathan-kansu/p5-ts#readme",
   "devDependencies": {
-    "@stencil/core": "^1.12.2",
-    "@types/jest": "^25.2.1",
-    "@types/puppeteer": "2.0.1",
-    "jest": "24.9.0",
-    "jest-cli": "24.9.0",
-    "puppeteer": "2.1.1"
+    "@types/p5": "^0.7.2",
+    "clean-webpack-plugin": "^2.0.0",
+    "copy-webpack-plugin": "^5.0.1",
+    "css-loader": "^2.1.1",
+    "file-loader": "^3.0.1",
+    "html-webpack-include-assets-plugin": "^1.0.7",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
   },
-  "license": "MIT"
+  "dependencies": {
+    "ccapture.js": "^1.1.0",
+    "p5": "^0.7.3"
+  }
 }
