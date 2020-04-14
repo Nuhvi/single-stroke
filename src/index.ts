@@ -2,7 +2,6 @@ import * as p5 from 'p5';
 import Spiral from './spiral/index';
 import createLayout from './layout/index';
 import { SpiralInterface } from './interfaces';
-const placeholderImg = require('./assets/placeholder.png');
 
 import {
   CANVAS_HEIGHT,
@@ -22,10 +21,13 @@ const sketch = (p5: p5) => {
   let canvas: HTMLElement | null;
   let exportAnimation: Boolean = false;
   let spiral: SpiralInterface;
-  let img: p5.Image;
 
   p5.setup = () => {
-    const canvas = p5.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    let width = p5.windowHeight;
+    let height = p5.windowHeight;
+
+    const canvas = p5.createCanvas(width, height);
+    p5.background(COLOR_BACKGROUND);
     p5.frameRate(FRAME_RATE);
 
     canvas.dragOver(() => {
@@ -38,9 +40,15 @@ const sketch = (p5: p5) => {
 
     canvas.drop(() => {});
 
-    spiral = Spiral();
+    spiral = Spiral(
+      {
+        center: { x: width / 2, y: height / 2 },
+        diameter: Math.sqrt(width ** 2 + height ** 2),
+      },
+      p5,
+    );
 
-    spiral.render();
+    p5.strokeWeight(1);
 
     if (exportAnimation) {
       capturer.start();
