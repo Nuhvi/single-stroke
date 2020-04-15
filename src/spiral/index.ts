@@ -9,9 +9,10 @@ export default (
       y: 0,
     },
     diameter = 500,
-    vertexDensity = 0.001,
+    vertexDensity = 0.5,
     coilsGap = 10,
     acceleration = 0.1,
+    jitterPower = 0.2,
   } = {},
   p5: p5,
 ) => {
@@ -42,26 +43,38 @@ export default (
     if (centerMask < 1) centerMask = Math.min(r / (coilsGap * 2), 1);
   };
 
-  const calculateBaseSpiralPoint = () => {
-    // Use center mask to smooth the center coil
-    theta += centerMask < 1 ? cordLength / coilsGap / 2 : cordLength / r;
-    r = beta * theta;
-
-    let x = center.x + r * Math.cos(theta);
-    let y = center.y + r * Math.sin(theta);
-    return p5.createVector(x, y);
-  };
-
   const renderLastSegment = () => {
     const p1 = points[points.length - 2];
     const p2 = points[points.length - 1];
     p5.line(p1.x, p1.y, p2.x, p2.y);
   };
 
-  const calculateNextPoint = (): p5.Vector => {
-    const point = calculateBaseSpiralPoint();
-    points.push(point);
+  const calculateBaseSpiralPoint = () => {
+    // Use center mask to smooth the center coil
+    theta += centerMask < 1 ? cordLength / coilsGap / 2 : cordLength / r;
+    r = beta * theta;
 
+    let x = r * Math.cos(theta);
+    let y = r * Math.sin(theta);
+    return p5.createVector(x, y);
+  };
+
+  const addJitter = (point: p5.Vector): void => {
+    const jitter = jitterPower * centerMask * (Math.random() - 0.5) * coilsGap;
+    point.add(jitter * Math.cos(theta), jitter * Math.sin(theta));
+  };
+
+  const translateToCenter = (point: p5.Vector): void => {
+    point.add(center.x, center.y);
+  };
+
+  const calculateNextPoint = (): p5.Vector => {
+    let point = calculateBaseSpiralPoint();
+    addJitter(point);
+
+    translateToCenter(point);
+
+    points.push(point);
     return point;
   };
 
