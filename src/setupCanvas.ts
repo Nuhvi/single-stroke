@@ -14,30 +14,50 @@ export default (p5: p5, app: HTMLElement): number[] => {
     app.className = '';
   });
 
+  // the p5.File is not available here :/
   app.addEventListener('dragover', (e) => {
-    e.stopPropagation();
     e.preventDefault();
-    app.className = 'dragged-over';
   });
 
-  app.addEventListener('drop', (e) => {
+  const getFileData = async (e) => {
+    // try URL
+    let fileData = e.dataTransfer?.getData('URL');
+
+    // try File data
+    if (!fileData) {
+      const files = e.dataTransfer?.files;
+      if (!files || files?.length > 1) return;
+      const file = files[0];
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      fileData = await new Promise((resolve, reject) => {
+        reader.onload = function (event) {
+          resolve(reader.result);
+        };
+      });
+    }
+
+    if (typeof fileData !== 'string') return;
+
+    return fileData;
+  };
+
+  app.addEventListener('drop', async (e) => {
     e.stopPropagation();
     e.preventDefault();
     app.className = '';
 
-    const files = e.dataTransfer?.files;
-    const file = files && files[0];
-    if (!file?.type.match(/image.*/) || !FileReader) return;
+    const fileData = await getFileData(e);
 
-    const reader = new FileReader();
+    if (!fileData) return;
 
-    reader.readAsArrayBuffer;
+    const img = document.createElement('img');
+    img.src = fileData;
+    document.querySelector('main')?.appendChild(img);
 
-    const data = reader.result;
-    console.log(reader);
-    if (!data) return;
-
-    app.className = 'image-dropped';
+    app.className = 'imgage-loaded';
   });
 
   return [width, height];

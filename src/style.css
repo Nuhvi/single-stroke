@@ -44,7 +44,7 @@ canvas {
 }
 
 .dragged-over #overlay {
-  border: 2px solid #0099ff;
+  border: 2px solid #0073c0;
   opacity: 0.5;
 }
 
