@@ -1,44 +1,17 @@
 import * as p5 from 'p5';
 import Spiral from './spiral';
-import createLayout from './layout/index';
+import setupCanvas from './setupCanvas';
+import createLayout from './layout';
 import { SpiralInterface } from './interfaces';
-
-import {
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
-  COLOR_BACKGROUND,
-  FRAME_RATE,
-} from './constants';
 
 import './style.css';
 
-const sketch = (p5: p5) => {
-  const capturer = new CCapture({
-    format: 'jpg',
-    framerate: FRAME_RATE,
-    quality: 100,
-  });
-  let canvas: HTMLElement | null;
-  let exportAnimation: Boolean = false;
+const sketch = (p5: p5, app: HTMLElement) => {
   let spiral: SpiralInterface;
+  let play: boolean = false;
 
   p5.setup = () => {
-    let width = p5.windowHeight;
-    let height = p5.windowHeight;
-
-    const canvas = p5.createCanvas(width, height);
-    p5.background(COLOR_BACKGROUND);
-    p5.frameRate(FRAME_RATE);
-
-    canvas.dragOver(() => {
-      p5.background('red');
-    });
-
-    canvas.dragLeave(() => {
-      p5.background(COLOR_BACKGROUND);
-    });
-
-    canvas.drop(() => {});
+    const [width, height] = setupCanvas(p5, app);
 
     spiral = Spiral(
       {
@@ -48,29 +21,17 @@ const sketch = (p5: p5) => {
       p5,
     );
 
-    p5.strokeWeight(1);
-
-    if (exportAnimation) {
-      capturer.start();
-    }
+    p5.strokeWeight(1.5);
   };
 
   p5.draw = () => {
-    spiral.render();
-
-    if (exportAnimation) {
-      if (canvas) {
-        capturer.capture(canvas);
-      }
-
-      if (spiral.isAnimationComplete) {
-        p5.noLoop();
-        capturer.stop();
-        capturer.save();
-      }
+    if (play) {
+      spiral.render();
     }
   };
 };
 
-createLayout();
-new p5(sketch);
+const app = createLayout();
+if (app) {
+  new p5((p5) => sketch(p5, app), app);
+}

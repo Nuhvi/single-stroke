@@ -14,9 +14,65 @@ body {
   padding: 0;
 }
 
-body {
+main {
+  position: relative;
   max-width: 1280px;
+  height: 100%;
   margin: auto;
+
+  padding: 20px;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#overlay {
+  z-index: -1;
+
+  height: 100%;
+
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  border-radius: 20px;
+  border: 2px dashed #dadada;
+}
+
+.dragged-over #overlay {
+  border: 2px solid #0099ff;
+  opacity: 0.5;
+}
+
+.image-dropped #overlay {
+  visibility: hidden;
+}
+
+#overlay #overlay h1,
+#overlay p,
+#overlay a {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+header {
+  margin: 2em;
+}
+
+footer {
+  opacity: 0.4;
+  font-weight: bold;
 }
