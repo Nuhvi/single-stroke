@@ -1,5 +1,5 @@
 import * as p5 from 'p5';
-import Spiral from './spiral/index';
+import Spiral from './spiral';
 import createLayout from './layout/index';
 import { SpiralInterface } from './interfaces';
 

@@ -1,6 +1,6 @@
 import * as p5 from 'p5';
 
-import { SpiralInterface } from '../interfaces';
+import { SpiralInterface } from './interfaces';
 
 export default (
   {
@@ -12,7 +12,8 @@ export default (
     vertexDensity = 0.5,
     coilsGap = 10,
     acceleration = 0.1,
-    jitterPower = 0.2,
+    wavingPower = 0.8,
+    wavingSize = 40,
   } = {},
   p5: p5,
 ) => {
@@ -51,7 +52,7 @@ export default (
 
   const calculateBaseSpiralPoint = () => {
     // Use center mask to smooth the center coil
-    theta += centerMask < 1 ? cordLength / coilsGap / 2 : cordLength / r;
+    theta += centerMask < 1 ? cordLength / coilsGap : cordLength / r;
     r = beta * theta;
 
     let x = r * Math.cos(theta);
@@ -59,9 +60,14 @@ export default (
     return p5.createVector(x, y);
   };
 
-  const addJitter = (point: p5.Vector): void => {
-    const jitter = jitterPower * centerMask * (Math.random() - 0.5) * coilsGap;
-    point.add(jitter * Math.cos(theta), jitter * Math.sin(theta));
+  const addWaving = (point: p5.Vector): void => {
+    const i = points.length / wavingSize;
+    const waving =
+      p5.map(p5.noise(i), 0, 1, -0.5, 0.5) *
+      coilsGap *
+      wavingPower *
+      centerMask;
+    point.add(waving * Math.cos(theta), waving * Math.sin(theta));
   };
 
   const translateToCenter = (point: p5.Vector): void => {
@@ -70,7 +76,7 @@ export default (
 
   const calculateNextPoint = (): p5.Vector => {
     let point = calculateBaseSpiralPoint();
-    addJitter(point);
+    addWaving(point);
 
     translateToCenter(point);
 
