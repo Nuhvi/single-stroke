@@ -1,6 +1,7 @@
 import * as p5 from 'p5';
-import Spiral from './spiral';
-import { SpiralInterface } from './interfaces';
+import Spiral from '../spiral';
+import { SpiralInterface } from '../interfaces';
+import scaleDimensions from './scaleDimensions';
 
 export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   let spiral: SpiralInterface;
@@ -8,15 +9,10 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
 
   p5.setup = () => {
     const onLoad = (img: p5.Element) => {
-      let { width, height } = img.elt;
-      const aspectRatio = width / height;
-      if (aspectRatio > 1) {
-        width = container.offsetWidth;
-        height = width / aspectRatio;
-      } else {
-        height = container.offsetHeight;
-        width = height * aspectRatio;
-      }
+      const [width, height] = scaleDimensions(
+        { w: img.elt.width, h: img.elt.height },
+        { w: container.offsetWidth, h: container.offsetHeight },
+      );
 
       p5.resizeCanvas(width, height);
       p5.image(img, 0, 0, width, height);
