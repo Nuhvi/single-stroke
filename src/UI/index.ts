@@ -1,5 +1,5 @@
 import './component.css';
-import addDragEvents from '../utils/addDragEvents';
+import addDragEvents from './addDragEvents';
 
 export default ({ el } = { el: 'body' }): HTMLDivElement | null => {
   const Container = document.querySelector(el);

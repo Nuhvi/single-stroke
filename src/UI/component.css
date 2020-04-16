@@ -2,7 +2,16 @@
   width: 100%;
   height: 100%;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   padding: 20px;
+}
+
+.single-stroke img {
+  position: absolute;
 }
 
 .single-stroke.image-loaded {

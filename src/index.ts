@@ -10,13 +10,13 @@ const SingleStroke = UI({
 
 let renderer: p5;
 
-const setUpCanvas = (imgSrc: string | undefined) => {
+const startCanvas = (imgSrc: string | undefined) => {
   if (!imgSrc || !SingleStroke) return;
   if (renderer) renderer.remove();
 
   SingleStroke.classList.add('image-loaded');
 
-  renderer = new p5((p5: p5) => sketch(p5, imgSrc), SingleStroke);
+  renderer = new p5((p5: p5) => sketch(p5, imgSrc, SingleStroke), SingleStroke);
 };
 
 SingleStroke?.addEventListener('drop', async (e) => {
@@ -26,7 +26,7 @@ SingleStroke?.addEventListener('drop', async (e) => {
 
   // try URL or reading file
   let src = e.dataTransfer?.getData('URL') || (await readFileData(e));
-  setUpCanvas(src);
+  startCanvas(src);
 });
 
 SingleStroke?.addEventListener('click', async (e) => {
@@ -34,5 +34,5 @@ SingleStroke?.addEventListener('click', async (e) => {
   e.preventDefault();
   SingleStroke.classList.remove('dragged-over');
 
-  setUpCanvas('s');
+  startCanvas('s');
 });
