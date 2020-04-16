@@ -19,7 +19,7 @@ export default (p5: p5, app: HTMLElement): number[] => {
     e.preventDefault();
   });
 
-  const getFileData = async (e) => {
+  const getFileData = async (e: DragEvent) => {
     // try URL
     let fileData = e.dataTransfer?.getData('URL');
 
@@ -34,7 +34,7 @@ export default (p5: p5, app: HTMLElement): number[] => {
 
       fileData = await new Promise((resolve, reject) => {
         reader.onload = function (event) {
-          resolve(reader.result);
+          if (typeof reader.result === 'string') resolve(reader.result);
         };
       });
     }
@@ -52,10 +52,6 @@ export default (p5: p5, app: HTMLElement): number[] => {
     const fileData = await getFileData(e);
 
     if (!fileData) return;
-
-    const img = document.createElement('img');
-    img.src = fileData;
-    document.querySelector('main')?.appendChild(img);
 
     app.className = 'imgage-loaded';
   });

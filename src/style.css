@@ -6,73 +6,13 @@
 
 html,
 body {
+  position: relative;
   box-sizing: border-box;
   height: 100%;
   font-size: 100%;
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;
-}
 
-main {
-  position: relative;
   max-width: 1280px;
   height: 100%;
   margin: auto;
-
-  padding: 20px;
-}
-
-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-#overlay {
-  z-index: -1;
-
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-
-  border-radius: 20px;
-  border: 2px dashed #dadada;
-}
-
-.dragged-over #overlay {
-  border: 2px solid #0073c0;
-  opacity: 0.5;
-}
-
-.image-dropped #overlay {
-  visibility: hidden;
-}
-
-#overlay #overlay h1,
-#overlay p,
-#overlay a {
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-  font-weight: bold;
-  color: black;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-header {
-  margin: 2em;
-}
-
-footer {
-  opacity: 0.4;
-  font-weight: bold;
 }
