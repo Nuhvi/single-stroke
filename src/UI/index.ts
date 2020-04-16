@@ -1,14 +1,16 @@
 import './component.css';
+import addDragEvents from '../utils/addDragEvents';
 
-export default ({ el } = { el: 'body' }): Element | null => {
+export default ({ el } = { el: 'body' }): HTMLDivElement | null => {
   const Container = document.querySelector(el);
   if (!Container) return null;
 
-  const SingleStroke = `
-  <div 
-    id="single-storke-${(Math.random() * 1000).toFixed(0)}"
-    class="single-stroke"
-  >
+  const SingleStroke = document.createElement('div');
+  SingleStroke.id = `single-storke-${(Math.random() * 1000).toFixed(0)}`;
+  SingleStroke.className = 'single-stroke';
+
+  SingleStroke.innerHTML = `
+
     <div class='drop-zone'>
       <header>
         <p>Hello👋, this is</p>
@@ -21,10 +23,11 @@ export default ({ el } = { el: 'body' }): Element | null => {
         <p>Drag and drop an image or click to browse.</p>
       </footer>
     </div>
-  <div>
   `;
 
-  Container.innerHTML = SingleStroke;
+  addDragEvents(SingleStroke);
 
-  return Container;
+  Container.appendChild(SingleStroke);
+
+  return SingleStroke;
 };
