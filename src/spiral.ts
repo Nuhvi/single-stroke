@@ -3,6 +3,7 @@ import * as p5 from 'p5';
 import { SpiralInterface } from './interfaces';
 
 export default (
+  p5: p5,
   {
     center = {
       x: 0,
@@ -15,7 +16,6 @@ export default (
     wavingPower = 0.8,
     wavingSize = 40,
   } = {},
-  p5: p5,
 ) => {
   // base Spiral variables
   const beta = coilsGap / (2 * Math.PI);

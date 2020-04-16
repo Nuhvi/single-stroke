@@ -1,22 +1,21 @@
 import * as p5 from 'p5';
 import Spiral from './spiral';
-import setupCanvas from './setupCanvas';
 import { SpiralInterface } from './interfaces';
 
-export default (p5: p5, app: HTMLElement) => {
+export default (p5: p5, imgSrc: string) => {
   let spiral: SpiralInterface;
   let play: boolean = false;
 
   p5.setup = () => {
-    const [width, height] = setupCanvas(p5, app);
+    let img = p5.createImg(imgSrc, 'uploaded image');
+    if (img) p5.image(img, 0, 0);
+    p5.loadPixels();
+    img.remove();
 
-    spiral = Spiral(
-      {
-        center: { x: width / 2, y: height / 2 },
-        diameter: Math.sqrt(width ** 2 + height ** 2),
-      },
-      p5,
-    );
+    // spiral = Spiral(p5, {
+    //   center: { x: width / 2, y: height / 2 },
+    //   diameter: Math.sqrt(width ** 2 + height ** 2),
+    // });
 
     p5.strokeWeight(1.5);
   };

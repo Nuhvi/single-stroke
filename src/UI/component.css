@@ -5,8 +5,12 @@
   padding: 20px;
 }
 
-.single-stroke.loaded {
+.single-stroke.image-loaded {
   padding: 0;
+}
+
+.single-stroke.image-loaded .drop-zone {
+  display: none;
 }
 
 .single-stroke .drop-zone {
@@ -27,10 +31,6 @@
 .single-stroke.dragged-over .drop-zone {
   border: 2px solid #0073c0;
   opacity: 0.5;
-}
-
-.single-stroke.image-dropped .drop-zone {
-  visibility: hidden;
 }
 
 .single-stroke .drop-zone h1,
