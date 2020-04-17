@@ -1,6 +1,26 @@
 import * as p5 from 'p5';
-
 import { SpiralInterface } from '../../interfaces';
+
+import { grayscale } from '../helpers/index';
+
+const copyBlur = (p5: p5, img: p5.Image) => {
+  const blurredImg = p5.createImage(img.width, img.height);
+
+  blurredImg.copy(
+    img,
+    0,
+    0,
+    img.width,
+    img.height,
+    0,
+    0,
+    img.width,
+    img.height,
+  );
+
+  blurredImg.filter(p5.BLUR, 1);
+  return blurredImg;
+};
 
 export default (
   p5: p5,
@@ -16,6 +36,7 @@ export default (
     acceleration = 0.1,
     wavingPower = 0.8,
     wavingSize = 40,
+    displacePower = 10,
   } = {},
 ) => {
   // base Spiral variables
@@ -35,6 +56,9 @@ export default (
 
   //  masks
   let centerMask: number = 0;
+
+  // blurredImg for smooth displacement
+  let blurredImg = copyBlur(p5, img);
 
   const updateAnimationCompleteStatus = (): void => {
     const p = points[points.length - 1];
@@ -71,15 +95,22 @@ export default (
     point.add(waving * Math.cos(theta), waving * Math.sin(theta));
   };
 
+  const displace = (point: p5.Vector): void => {
+    const color = blurredImg.get(point.x, point.y);
+    if (!Array.isArray(color)) return;
+    const val = grayscale(color) * displacePower * centerMask;
+    point.add(val * Math.cos(theta), val * Math.sin(theta));
+  };
+
   const translateToCenter = (point: p5.Vector): void => {
     point.add(center.x, center.y);
   };
 
   const calculateNextPoint = (): p5.Vector => {
     let point = calculateBaseSpiralPoint();
-    addWaving(point);
-
     translateToCenter(point);
+    addWaving(point);
+    displace(point);
 
     points.push(point);
     return point;

@@ -1,4 +1,4 @@
-export default (
+export const scaleDimensions = (
   src: { w: number; h: number },
   trgt: { w: number; h: number },
 ): [number, number] => {
@@ -17,4 +17,8 @@ export default (
   }
 
   return [src.w, src.h];
+};
+
+export const grayscale = ([r, g, b, a]: number[]): number => {
+  return (r + g + b) / 3 / 255;
 };
