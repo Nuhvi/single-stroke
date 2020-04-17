@@ -1,6 +1,6 @@
 import * as p5 from 'p5';
 
-import { SpiralInterface } from './interfaces';
+import { SpiralInterface } from '../../interfaces';
 
 export default (
   p5: p5,

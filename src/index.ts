@@ -1,23 +1,13 @@
 import UI from './view/index';
-import * as p5 from 'p5';
-import sketch from './sketch/index';
-import readFileData from './utils/readFileData';
 import './style.css';
+import readFileData from './utils/readFileData';
+import Controller from './controller/index';
 
 const SingleStroke = UI({
   el: 'body',
 });
 
-let renderer: p5;
-
-const startCanvas = (imgSrc: string | null | false | undefined) => {
-  if (!imgSrc || !SingleStroke) return;
-
-  if (renderer) renderer.remove();
-  SingleStroke.classList.add('image-loaded');
-
-  renderer = new p5((p5: p5) => sketch(p5, imgSrc, SingleStroke), SingleStroke);
-};
+const controller = SingleStroke && Controller(SingleStroke);
 
 SingleStroke?.addEventListener('drop', async (e) => {
   e.preventDefault();
@@ -28,7 +18,7 @@ SingleStroke?.addEventListener('drop', async (e) => {
     e.dataTransfer?.getData('URL') ||
     (e.dataTransfer?.files && (await readFileData(e.dataTransfer?.files[0])));
 
-  startCanvas(src);
+  controller?.startCanvas(src);
 });
 
 SingleStroke?.addEventListener('change', async (e) => {
@@ -38,5 +28,5 @@ SingleStroke?.addEventListener('change', async (e) => {
     e.target.files &&
     (await readFileData(e.target.files[0]));
 
-  startCanvas(src);
+  controller?.startCanvas(src);
 });
