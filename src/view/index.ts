@@ -1,39 +1,55 @@
 import './component.css';
 import addDragEvents from './addDragEvents';
+import { View } from '../interfaces';
 
-export default ({ el } = { el: 'body' }): HTMLDivElement | null => {
-  const Container = document.querySelector(el);
-  if (!Container) return null;
+const markup = `
+<div class='drop-zone'>
+  <header>
+    <p>Hello👋, this is</p>
+    <h1>
+      <a href="https://github.com/Nazeh/single-stroke" target="blank">
+        Single Stroke
+      </a>
+    </h1>
+    <p>Generative art 🎨 by 
+     <a href="https://twitter.com/ArNazeh" target="blank">Ar Nazeh</a>
+    </p>
+  </header>
+  <footer>
+    <p>Drag and drop an image or click to browse.</p>
+  </footer>
+</div>
+<label>
+  <input id="file-upload" type="file"/>
+</label>
+`;
 
-  const SingleStroke = document.createElement('div');
-  SingleStroke.id = `single-storke-${(Math.random() * 1000).toFixed(0)}`;
-  SingleStroke.className = 'single-stroke';
+export default ({ el } = { el: 'body' }): View => {
+  const Root = document.querySelector(el);
+  if (!Root) throw Error("Can't find this element");
 
-  SingleStroke.innerHTML = `
-    <div class='drop-zone'>
-      <header>
-        <p>Hello👋, this is</p>
-        <h1>
-          <a href="https://github.com/Nazeh/single-stroke" target="blank">
-            Single Stroke
-          </a>
-        </h1>
-        <p>Generative art 🎨 by 
-         <a href="https://twitter.com/ArNazeh" target="blank">Ar Nazeh</a>
-        </p>
-      </header>
-      <footer>
-        <p>Drag and drop an image or click to browse.</p>
-      </footer>
-    </div>
-    <label>
-      <input id="file-upload" type="file"/>
-    </label>
-  `;
+  const container = document.createElement('div');
 
-  addDragEvents(SingleStroke);
+  Root.appendChild(container);
 
-  Container.appendChild(SingleStroke);
+  container.id = `single-storke-${(Math.random() * 1000).toFixed(0)}`;
+  container.className = 'single-stroke';
 
-  return SingleStroke;
+  container.innerHTML = markup;
+
+  addDragEvents(container);
+
+  const home = () => {
+    container.classList.remove('image-loaded');
+  };
+
+  const openCanvas = () => {
+    container.classList.add('image-loaded');
+  };
+
+  const draggedOver = () => {
+    container.classList.remove('dragged-over');
+  };
+
+  return { container, home, openCanvas, draggedOver };
 };

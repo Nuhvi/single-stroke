@@ -5,7 +5,7 @@ import scaleDimensions from './helpers/scaleDimensions';
 
 export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   let spiral: SpiralInterface;
-  let play: boolean = false;
+  let play: boolean = true;
   let img: p5.Image;
 
   p5.preload = () => {
@@ -17,6 +17,7 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
       { w: img.width, h: img.height },
       { w: container.offsetWidth, h: container.offsetHeight },
     );
+
     p5.resizeCanvas(width, height);
     p5.pixelDensity(1);
 

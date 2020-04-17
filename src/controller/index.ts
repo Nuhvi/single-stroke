@@ -1,53 +1,48 @@
 import * as p5 from 'p5';
 import sketch from '../sketch/index';
+import { isBlockedCORS, isImage, readFileData } from './helpers/index';
 
-export default (container: HTMLDivElement) => {
+import { View } from '../interfaces';
+
+export default (view: View) => {
   let renderer: p5;
 
-  const resetView = () => {
-    if (renderer) renderer.remove();
-    container?.classList.remove('image-loaded');
-  };
-
-  const createCanvas = (src: string) => {
-    renderer = new p5((p5: p5) => sketch(p5, src, container), container);
-  };
-
-  const openCanvas = () => {
-    container.classList.add('image-loaded');
-  };
-
-  const isBlockedCORS = (path: string) => {
-    return fetch(
-      path,
-      new Request(path, {
-        method: 'GET',
-        mode: 'cors',
-      }),
-    )
-      .then((res) => {
-        return false;
-      })
-      .catch((error) => {
-        return true;
-      });
-  };
-
-  const isImage = (src: string) => {
-    return /data:image\//.test(src);
-  };
-
   const startCanvas = async (src: string | null | false | undefined) => {
-    if (!src || !container || (await isBlockedCORS(src)) || !isImage(src))
+    if (!src || !view.container || (await isBlockedCORS(src)) || !isImage(src))
       return;
 
-    resetView();
+    if (renderer) renderer.remove();
 
-    createCanvas(src);
+    view.home();
 
-    openCanvas();
+    renderer = new p5(
+      (p5: p5) => sketch(p5, src, view.container),
+      view.container,
+    );
+
+    view.openCanvas();
   };
-  return {
-    startCanvas,
-  };
+
+  view.container.addEventListener('drop', async (e: DragEvent) => {
+    e.preventDefault();
+
+    view.draggedOver();
+
+    // try URL or reading file
+    let src =
+      e.dataTransfer?.getData('URL') ||
+      (e.dataTransfer?.files && (await readFileData(e.dataTransfer?.files[0])));
+
+    startCanvas(src);
+  });
+
+  view.container.addEventListener('change', async (e) => {
+    e.preventDefault();
+    const src =
+      e.target instanceof HTMLInputElement &&
+      e.target.files &&
+      (await readFileData(e.target.files[0]));
+
+    startCanvas(src);
+  });
 };
