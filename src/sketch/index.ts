@@ -5,7 +5,7 @@ import scaleDimensions from './helpers/scaleDimensions';
 
 export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   let spiral: SpiralInterface;
-  let play: boolean = true;
+  let play: boolean = false;
   let img: p5.Image;
 
   p5.preload = () => {
@@ -22,7 +22,7 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
 
     img.loadPixels();
 
-    spiral = Spiral(p5, {
+    spiral = Spiral(p5, img, {
       center: { x: width / 2, y: height / 2 },
       diameter: Math.sqrt(width ** 2 + height ** 2),
     });

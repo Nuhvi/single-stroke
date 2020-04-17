@@ -4,6 +4,7 @@ import { SpiralInterface } from '../../interfaces';
 
 export default (
   p5: p5,
+  img: p5.Image,
   {
     center = {
       x: 0,

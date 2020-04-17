@@ -9,8 +9,8 @@ export default (container: HTMLDivElement) => {
     container?.classList.remove('image-loaded');
   };
 
-  const createCanvas = (imgSrc: string) => {
-    renderer = new p5((p5: p5) => sketch(p5, imgSrc, container), container);
+  const createCanvas = (src: string) => {
+    renderer = new p5((p5: p5) => sketch(p5, src, container), container);
   };
 
   const openCanvas = () => {
@@ -33,12 +33,17 @@ export default (container: HTMLDivElement) => {
       });
   };
 
-  const startCanvas = async (imgSrc: string | null | false | undefined) => {
-    if (!imgSrc || !container || (await isBlockedCORS(imgSrc))) return;
+  const isImage = (src: string) => {
+    return /data:image\//.test(src);
+  };
+
+  const startCanvas = async (src: string | null | false | undefined) => {
+    if (!src || !container || (await isBlockedCORS(src)) || !isImage(src))
+      return;
 
     resetView();
 
-    createCanvas(imgSrc);
+    createCanvas(src);
 
     openCanvas();
   };
