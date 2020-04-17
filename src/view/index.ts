@@ -10,7 +10,6 @@ export default ({ el } = { el: 'body' }): HTMLDivElement | null => {
   SingleStroke.className = 'single-stroke';
 
   SingleStroke.innerHTML = `
-
     <div class='drop-zone'>
       <header>
         <p>Hello👋, this is</p>
@@ -26,10 +25,10 @@ export default ({ el } = { el: 'body' }): HTMLDivElement | null => {
       <footer>
         <p>Drag and drop an image or click to browse.</p>
       </footer>
-      <label>
-        <input id="file-upload" type="file"/>
-      </label>
     </div>
+    <label>
+      <input id="file-upload" type="file"/>
+    </label>
   `;
 
   addDragEvents(SingleStroke);

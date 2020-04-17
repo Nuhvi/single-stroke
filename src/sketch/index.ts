@@ -22,10 +22,10 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
         diameter: Math.sqrt(width ** 2 + height ** 2),
       });
 
-      p5.background('#fff5');
+      p5.background('#ffff');
     };
 
-    let img = p5.createImg(imgSrc, 'uploaded image', onLoad).hide();
+    p5.createImg(imgSrc, 'uploaded image', onLoad).hide();
 
     p5.strokeWeight(1.5);
   };
