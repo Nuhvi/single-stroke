@@ -14,9 +14,11 @@ export default ({ el } = { el: 'body' }): HTMLDivElement | null => {
     <div class='drop-zone'>
       <header>
         <p>Hello👋, this is</p>
-        <a href="https://github.com/Nazeh/single-stroke" target="blank">
-          <h1>Single Stroke</h1>
-        </a>
+        <h1>
+          <a href="https://github.com/Nazeh/single-stroke" target="blank">
+            Single Stroke
+          </a>
+        </h1>
         <p>Generative art 🎨 by 
          <a href="https://twitter.com/ArNazeh" target="blank">Ar Nazeh</a>
         </p>
