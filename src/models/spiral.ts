@@ -13,13 +13,15 @@ export default (
     },
     diameter = 500,
     vertexDensity = 0.5,
-    coilsGap = 10,
-    acceleration = 0.1,
+    coilsGap = 8,
+    speed = 20,
+    acceleration = 0,
     wavingPower = 0.8,
     wavingSize = 40,
     displacePower = 10,
+    strokeWidth = 0.8,
   } = {},
-) => {
+): SpiralInterface => {
   // base Spiral variables
   const beta = coilsGap / (2 * Math.PI);
   const cordLength = Math.min(1 / vertexDensity, coilsGap);
@@ -27,10 +29,11 @@ export default (
   // iterables
   let r = 1;
   let theta = 0;
-  let steps = 1;
+  let steps = speed;
 
   // points arrays
   const points: p5.Vector[] = [p5.createVector(center.x, center.y)];
+  const reversePoints: p5.Vector[] = [p5.createVector(center.x, center.y)];
 
   // booleans
   let isAnimationComplete: boolean = false;
@@ -38,23 +41,8 @@ export default (
   //  masks
   let centerMask: number = 0;
 
-  // blurredImg for smooth displacement
-  let blurredImg = copyBlur(p5, img);
-
-  const updateAnimationCompleteStatus = (): void => {
-    const p = points[points.length - 1];
-    isAnimationComplete = p.x ** 2 + p.y ** 2 > diameter ** 2;
-  };
-
-  const updateCenterMask = (): void => {
-    if (centerMask < 1) centerMask = Math.min(r / (coilsGap * 2), 1);
-  };
-
-  const renderLastSegment = () => {
-    const p1 = points[points.length - 2];
-    const p2 = points[points.length - 1];
-    p5.line(p1.x, p1.y, p2.x, p2.y);
-  };
+  // blur img for smooth displacement
+  img = copyBlur(p5, img);
 
   const calculateBaseSpiralPoint = () => {
     // Use center mask to smooth the center coil
@@ -68,23 +56,62 @@ export default (
 
   const addWaving = (point: p5.Vector): void => {
     const i = points.length / wavingSize;
-    const waving =
+    const val =
       p5.map(p5.noise(i), 0, 1, -0.5, 0.5) *
       coilsGap *
       wavingPower *
       centerMask;
-    point.add(waving * Math.cos(theta), waving * Math.sin(theta));
+    point.add(val * Math.cos(theta), val * Math.sin(theta));
   };
 
   const displace = (point: p5.Vector): void => {
-    const rgba = blurredImg.get(point.x, point.y);
+    const rgba = img.get(point.x, point.y);
     if (!Array.isArray(rgba)) return;
     const val = (rgba[0] / 255) * displacePower * centerMask;
     point.add(val * Math.cos(theta), val * Math.sin(theta));
   };
 
+  const addStroke = (p1: p5.Vector) => {
+    const rgba = img.get(p1.x, p1.y);
+    if (!Array.isArray(rgba)) return;
+    const val =
+      p5.map(rgba[0] / 255, 0, 1, 1, 0) *
+      (coilsGap / 2) *
+      strokeWidth *
+      centerMask;
+    const p2 = p5.createVector(p1.x, p1.y);
+    const cos = Math.cos(theta);
+    const sin = Math.sin(theta);
+    p1.add(val * cos, val * sin);
+    p2.add(-val * cos, -val * sin);
+    points.push(p1);
+    reversePoints.push(p2);
+  };
+
   const translateToCenter = (point: p5.Vector): void => {
     point.add(center.x, center.y);
+  };
+
+  const updateAnimationCompleteStatus = (): void => {
+    const p = points[points.length - 1];
+    isAnimationComplete = p.x ** 2 + p.y ** 2 > diameter ** 2;
+  };
+
+  const updateCenterMask = (): void => {
+    if (centerMask < 1) centerMask = Math.min(r / (coilsGap * 2), 1);
+  };
+
+  const renderLastSegment = () => {
+    const p1 = points[points.length - 3];
+    const p2 = points[points.length - 2];
+    const p3 = reversePoints[reversePoints.length - 2];
+    const p4 = reversePoints[reversePoints.length - 1];
+    p5.beginShape();
+    p5.vertex(p1.x, p1.y);
+    p5.vertex(p2.x, p2.y);
+    p5.vertex(p4.x, p4.y);
+    p5.vertex(p3.x, p3.y);
+    p5.endShape(p5.CLOSE);
   };
 
   const calculateNextPoint = (): p5.Vector => {
@@ -92,6 +119,7 @@ export default (
     translateToCenter(point);
     addWaving(point);
     displace(point);
+    addStroke(point);
 
     points.push(point);
     return point;
@@ -105,7 +133,7 @@ export default (
       updateCenterMask();
       s -= 1;
     } while (s > 0);
-    steps *= 1 + acceleration;
+    steps *= 1 + acceleration / 10;
   };
 
   const render = () => {

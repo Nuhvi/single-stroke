@@ -33,7 +33,9 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
     img.loadPixels();
     img.filter(p5.GRAY);
     p5.image(img, 0, 0);
-    p5.background('#fff5');
+    p5.background('#fffe');
+
+    p5.fill(0);
 
     spiral = Spiral(p5, img, {
       center: { x: width / 2, y: height / 2 },
