@@ -94,12 +94,12 @@
 }
 
 .single-stroke header {
-  z-index: 999;
   text-align: center;
   margin: 2em;
 }
 
 .single-stroke a {
+  z-index: 999;
   position: relative;
   font-family: 'Dancing Script', cursive;
   font-size: 1.5em;

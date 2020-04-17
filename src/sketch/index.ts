@@ -5,7 +5,6 @@ import { scaleNeeded } from './helpers/index';
 
 export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   let spiral: SpiralInterface;
-  let play: boolean = true;
   let img: p5.Image;
 
   p5.preload = () => {
@@ -28,14 +27,10 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
 
     p5.resizeCanvas(width, height);
 
-    p5.pixelDensity(1);
-
     img.loadPixels();
     img.filter(p5.GRAY);
-    p5.image(img, 0, 0);
-    p5.background('#fffe');
 
-    p5.fill(0);
+    p5.background('#fffffd');
 
     spiral = Spiral(p5, img, {
       center: { x: width / 2, y: height / 2 },
@@ -44,8 +39,17 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   };
 
   p5.draw = () => {
-    if (play && spiral) {
+    if (spiral.isAnimationComplete) {
+      p5.noLoop();
+      p5.save('single-stroke-ar-nazeh');
+    } else {
       spiral.render();
+    }
+  };
+
+  p5.keyTyped = () => {
+    if (p5.key === 's') {
+      p5.save();
     }
   };
 };

@@ -11,15 +11,16 @@ export default (
       x: 0,
       y: 0,
     },
+    alpha = 0.85,
     diameter = 500,
     vertexDensity = 0.5,
     coilsGap = 8,
-    speed = 20,
-    acceleration = 0,
-    wavingPower = 0.8,
-    wavingSize = 40,
+    speed = 40,
+    acceleration = 0.5,
+    wavingPower = 0.25,
+    wavingSize = 20,
     displacePower = 10,
-    strokeWidth = 0.8,
+    strokeWidth = 1,
   } = {},
 ): SpiralInterface => {
   // base Spiral variables
@@ -43,6 +44,11 @@ export default (
 
   // blur img for smooth displacement
   img = copyBlur(p5, img);
+
+  // set fill color
+  const color = p5.color(0, alpha * 255);
+  p5.noStroke();
+  p5.fill(color);
 
   const calculateBaseSpiralPoint = () => {
     // Use center mask to smooth the center coil
@@ -75,10 +81,7 @@ export default (
     const rgba = img.get(p1.x, p1.y);
     if (!Array.isArray(rgba)) return;
     const val =
-      p5.map(rgba[0] / 255, 0, 1, 1, 0) *
-      (coilsGap / 2) *
-      strokeWidth *
-      centerMask;
+      p5.map(rgba[0] / 255, 0, 1, 1, 0) * (coilsGap / 2) * strokeWidth;
     const p2 = p5.createVector(p1.x, p1.y);
     const cos = Math.cos(theta);
     const sin = Math.sin(theta);
@@ -106,12 +109,15 @@ export default (
     const p2 = points[points.length - 2];
     const p3 = reversePoints[reversePoints.length - 2];
     const p4 = reversePoints[reversePoints.length - 1];
+    p5.noStroke();
     p5.beginShape();
     p5.vertex(p1.x, p1.y);
     p5.vertex(p2.x, p2.y);
     p5.vertex(p4.x, p4.y);
     p5.vertex(p3.x, p3.y);
     p5.endShape(p5.CLOSE);
+    p5.stroke((1 - alpha) * 255);
+    p5.line(p1.x, p1.y, p3.x, p3.y);
   };
 
   const calculateNextPoint = (): p5.Vector => {
@@ -139,7 +145,6 @@ export default (
   const render = () => {
     renderStepsAtAtime();
     updateAnimationCompleteStatus();
-    if (isAnimationComplete) p5.noLoop();
   };
 
   return Object.freeze({
