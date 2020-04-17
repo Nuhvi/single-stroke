@@ -1,7 +1,7 @@
 import * as p5 from 'p5';
-import Spiral from './models/spiral';
+import Spiral from '../models/spiral';
 import { SpiralInterface } from '../interfaces';
-import { scaleDimensions } from './helpers/index';
+import { scaleNeeded } from './helpers/index';
 
 export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   let spiral: SpiralInterface;
@@ -13,15 +13,27 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   };
 
   p5.setup = () => {
-    const [width, height] = scaleDimensions(
-      { w: img.width, h: img.height },
+    let { width, height } = img;
+
+    const scale = scaleNeeded(
+      { w: width, h: height },
       { w: container.offsetWidth, h: container.offsetHeight },
     );
 
+    width *= scale;
+    height *= scale;
+
+    img.width = width;
+    img.height = height;
+
     p5.resizeCanvas(width, height);
+
     p5.pixelDensity(1);
 
     img.loadPixels();
+    img.filter(p5.GRAY);
+    p5.image(img, 0, 0);
+    p5.background('#fff5');
 
     spiral = Spiral(p5, img, {
       center: { x: width / 2, y: height / 2 },

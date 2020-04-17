@@ -1,26 +1,7 @@
 import * as p5 from 'p5';
-import { SpiralInterface } from '../../interfaces';
+import { SpiralInterface } from '../interfaces';
 
-import { grayscale } from '../helpers/index';
-
-const copyBlur = (p5: p5, img: p5.Image) => {
-  const blurredImg = p5.createImage(img.width, img.height);
-
-  blurredImg.copy(
-    img,
-    0,
-    0,
-    img.width,
-    img.height,
-    0,
-    0,
-    img.width,
-    img.height,
-  );
-
-  blurredImg.filter(p5.BLUR, 1);
-  return blurredImg;
-};
+import { copyBlur } from './helpers/index';
 
 export default (
   p5: p5,
@@ -96,9 +77,9 @@ export default (
   };
 
   const displace = (point: p5.Vector): void => {
-    const color = blurredImg.get(point.x, point.y);
-    if (!Array.isArray(color)) return;
-    const val = grayscale(color) * displacePower * centerMask;
+    const rgba = blurredImg.get(point.x, point.y);
+    if (!Array.isArray(rgba)) return;
+    const val = (rgba[0] / 255) * displacePower * centerMask;
     point.add(val * Math.cos(theta), val * Math.sin(theta));
   };
 
