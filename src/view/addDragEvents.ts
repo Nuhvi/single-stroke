@@ -10,14 +10,12 @@ const isHoveringOverSelf = (parent: HTMLElement, e: DragEvent) => {
 
 export default (el: HTMLElement) => {
   el?.addEventListener('dragover', (e) => {
-    e.stopPropagation();
     e.preventDefault();
     if (el.classList.contains('dragged-over')) return;
     el.classList.add('dragged-over');
   });
 
   el?.addEventListener('dragleave', (e) => {
-    e.stopPropagation();
     e.preventDefault();
     if (isHoveringOverSelf(el, e)) return;
     el.classList.remove('dragged-over');

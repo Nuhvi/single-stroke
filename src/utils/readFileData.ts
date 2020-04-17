@@ -1,8 +1,4 @@
-export default async (e: DragEvent) => {
-  const files = e.dataTransfer?.files;
-  if (!files || files?.length > 1) return;
-  const file = files[0];
-
+export default async (file: Blob) => {
   const reader = new FileReader();
   reader.readAsDataURL(file);
 

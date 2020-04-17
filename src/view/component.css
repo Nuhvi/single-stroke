@@ -14,6 +14,20 @@
   position: absolute;
 }
 
+.single-stroke label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.single-stroke input[type='file'] {
+  display: none;
+}
+
 .single-stroke.image-loaded {
   padding: 0;
 }
@@ -33,8 +47,6 @@
 
   border-radius: 20px;
   border: 2px dashed #dadada;
-
-  cursor: pointer;
 }
 
 .single-stroke.dragged-over .drop-zone {
@@ -49,6 +61,7 @@
 }
 
 .single-stroke a {
+  z-index: 9999;
   text-decoration: none;
   font-weight: bold;
   color: black;
@@ -59,6 +72,7 @@
 }
 
 .single-stroke header {
+  z-index: 999;
   text-align: center;
   margin: 2em;
 }
