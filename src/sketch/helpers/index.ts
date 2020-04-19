@@ -3,15 +3,13 @@ export const scaleNeeded = (
   trgt: { w: number; h: number },
 ): number => {
   let scale = 1;
-  const aspectRatio = src.w / src.h;
+  const srcAspectRatio = src.w / src.h;
+  const trgtAspectRatio = trgt.w / trgt.h;
 
-  if (aspectRatio > 1) {
+  if (srcAspectRatio >= trgtAspectRatio) {
     scale = trgt.w / src.w;
-  } else if (aspectRatio < 1) {
+  } else {
     scale = trgt.h / src.h;
-  } else if (aspectRatio === 1) {
-    const smallSide = Math.min(trgt.w, trgt.h, src.w);
-    scale = smallSide / src.w;
   }
 
   return scale;

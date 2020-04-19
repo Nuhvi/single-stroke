@@ -7,5 +7,6 @@
     "sourceMap": true,
     "strict": true,
     "target": "es5"
-  }
+  },
+  "exclude": ["src/**/*.spec.ts"]
 }
