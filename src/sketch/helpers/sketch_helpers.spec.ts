@@ -14,7 +14,9 @@ describe('scaleNeeded(src, trgt)', () => {
       expect(scaleNeeded({ w, h }, { w, h })).toEqual(1);
     });
     test('it returns the needed scale if src is smaller than target', () => {
-      expect(scaleNeeded({ w, h }, { w: w * s, h: h * s })).toEqual(s);
+      expect(scaleNeeded({ w, h }, { w: w * s, h: h * s }).toFixed(2)).toEqual(
+        s.toFixed(2),
+      );
     });
     test('it returns the needed scale if src is larger than target', () => {
       expect(scaleNeeded({ w: w * s, h: h * s }, { w, h }).toFixed(2)).toEqual(
