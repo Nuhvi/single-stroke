@@ -1,6 +1,6 @@
 export interface SpiralInterface {
   isAnimationComplete: boolean;
-  render(): void;
+  grow(): void;
 }
 
 export interface View {

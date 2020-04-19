@@ -26,6 +26,7 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
     img.height = height;
 
     p5.resizeCanvas(width, height);
+    p5.pixelDensity(1);
 
     img.loadPixels();
     img.filter(p5.GRAY);
@@ -41,9 +42,9 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
   p5.draw = () => {
     if (spiral.isAnimationComplete) {
       p5.noLoop();
-      p5.save('single-stroke-ar-nazeh');
+      // p5.save('single-stroke-ar-nazeh');
     } else {
-      spiral.render();
+      spiral.grow();
     }
   };
 

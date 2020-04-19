@@ -47,8 +47,6 @@ export default (
 
   // set fill color
   const color = p5.color(0, alpha * 255);
-  p5.noStroke();
-  p5.fill(color);
 
   const calculateBaseSpiralPoint = () => {
     // Use center mask to smooth the center coil
@@ -104,22 +102,6 @@ export default (
     if (centerMask < 1) centerMask = Math.min(r / (coilsGap * 2), 1);
   };
 
-  const renderLastSegment = () => {
-    const p1 = points[points.length - 3];
-    const p2 = points[points.length - 2];
-    const p3 = reversePoints[reversePoints.length - 2];
-    const p4 = reversePoints[reversePoints.length - 1];
-    p5.noStroke();
-    p5.beginShape();
-    p5.vertex(p1.x, p1.y);
-    p5.vertex(p2.x, p2.y);
-    p5.vertex(p4.x, p4.y);
-    p5.vertex(p3.x, p3.y);
-    p5.endShape(p5.CLOSE);
-    p5.stroke((1 - alpha) * 255);
-    p5.line(p1.x, p1.y, p3.x, p3.y);
-  };
-
   const calculateNextPoint = (): p5.Vector => {
     let point = calculateBaseSpiralPoint();
     translateToCenter(point);
@@ -131,7 +113,39 @@ export default (
     return point;
   };
 
-  const renderStepsAtAtime = () => {
+  const renderAll = () => {
+    p5.background('#fffffd');
+    p5.noStroke();
+    p5.fill(0, alpha * 255);
+    p5.beginShape();
+    points.forEach((p) => {
+      p5.vertex(p.x, p.y);
+    });
+    reversePoints.reverse().forEach((p) => {
+      p5.vertex(p.x, p.y);
+    });
+    p5.endShape(p5.CLOSE);
+  };
+
+  const renderLastSegment = () => {
+    const p1 = points[points.length - 3];
+    const p2 = points[points.length - 2];
+    const p3 = reversePoints[reversePoints.length - 2];
+    const p4 = reversePoints[reversePoints.length - 1];
+    p5.fill(color);
+    p5.noStroke();
+    p5.beginShape();
+    p5.vertex(p1.x, p1.y);
+    p5.vertex(p2.x, p2.y);
+    p5.vertex(p4.x, p4.y);
+    p5.vertex(p3.x, p3.y);
+    p5.endShape(p5.CLOSE);
+    // Hide the gap with a stroke
+    p5.stroke((1 - alpha) * 255);
+    p5.line(p1.x, p1.y, p3.x, p3.y);
+  };
+
+  const growStepsAtAtime = () => {
     let s = steps;
     do {
       calculateNextPoint();
@@ -142,15 +156,16 @@ export default (
     steps *= 1 + acceleration / 10;
   };
 
-  const render = () => {
-    renderStepsAtAtime();
+  const grow = () => {
+    growStepsAtAtime();
     updateAnimationCompleteStatus();
+    // if (isAnimationComplete) renderAll();
   };
 
   return Object.freeze({
     get isAnimationComplete() {
       return isAnimationComplete;
     },
-    render,
+    grow,
   });
 };
