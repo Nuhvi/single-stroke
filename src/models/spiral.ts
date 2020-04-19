@@ -23,6 +23,13 @@ export default (
     strokeWidth = 1,
   } = {},
 ): SpiralInterface => {
+  // Take pixel density in consideration
+  const pixelDensity = p5.pixelDensity();
+  coilsGap /= pixelDensity;
+  vertexDensity *= pixelDensity;
+  displacePower /= pixelDensity;
+  wavingSize /= pixelDensity;
+
   // base Spiral variables
   const beta = coilsGap / (2 * Math.PI);
   const cordLength = Math.min(1 / vertexDensity, coilsGap);
@@ -140,6 +147,8 @@ export default (
     p5.vertex(p4.x, p4.y);
     p5.vertex(p3.x, p3.y);
     p5.endShape(p5.CLOSE);
+    // Hide stroke cap
+    p5.strokeWeight(1 / pixelDensity);
     // Hide the gap with a stroke
     p5.stroke((1 - alpha) * 255);
     p5.line(p1.x, p1.y, p3.x, p3.y);
