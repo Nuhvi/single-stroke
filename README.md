@@ -1,6 +1,15 @@
 # Single Stroke
 
-Generative art app 🎨 built with ❤️ using p5.js.
+A generative art web-app 🎨 that converts any image into a spiral single stroke illustration!
+
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/nazeh/single-stroke/blob/master/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/nazeh/singlestroke" />
+  </a>
+</p>
+
+<img alt="Preview of single stroke app" src="docs/preview.gif" />
 
 ## Installation
 
