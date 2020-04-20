@@ -26,6 +26,7 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
     img.height = height;
 
     p5.resizeCanvas(width, height);
+    p5.pixelDensity(1 / scale);
 
     img.loadPixels();
     img.filter(p5.GRAY);
