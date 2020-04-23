@@ -1,0 +1,11 @@
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+:global(body) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
