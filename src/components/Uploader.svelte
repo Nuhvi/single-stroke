@@ -1,8 +1,11 @@
 <script>
+    import Error from './Error'
+
     export let imageData
 
     import { readFileData, isHoveringOverSelf } from '../utils'
 
+    let error = false
     let draggedOver = false
 
     const dragOver = () => {
@@ -14,14 +17,27 @@
         draggedOver = false
     }
 
+    const handleImageData = data => {
+        if (data !== false) {
+            imageData = data
+        } else {
+            error = 'Invalid image format!'
+            setTimeout(() => {
+                error = false
+            }, 1000)
+        }
+    }
+
     const drop = async e => {
-        imageData =
+        const result =
             e.dataTransfer.getData('URL') ||
             (await readFileData(e.dataTransfer.files[0]))
+        handleImageData(result)
     }
 
     const change = async e => {
-        imageData = await readFileData(e.target.files[0])
+        const result = await readFileData(e.target.files[0])
+        handleImageData(result)
     }
 </script>
 
@@ -31,6 +47,7 @@
     on:dragleave={dragLeave}
     on:drop|preventDefault={drop}
 >
+    <Error {error} />
     <div
         class="drop-zone"
         class:dragged-over={draggedOver}

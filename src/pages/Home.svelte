@@ -36,7 +36,6 @@
             </footer>
         </div>
     {/if}
-
     <Uploader bind:imageData />
 </main>
 
@@ -56,13 +55,13 @@
         box-shadow: 0 0 5px #0001;
 
         font-family: 'Roboto', sans-serif;
+        text-align: center;
 
         footer {
             opacity: 0.4;
             font-weight: bold;
         }
         header {
-            text-align: center;
             margin: 2em;
 
             h1,
