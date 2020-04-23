@@ -5,7 +5,7 @@ A generative art web-app 🎨 that converts any image into a spiral single strok
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/nazeh/single-stroke/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/nazeh/singlestroke" />
+    <img alt="License: MIT" src="https://img.shields.io/github/license/nazeh/single-stroke" />
   </a>
 </p>
 
