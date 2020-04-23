@@ -1,20 +1,11 @@
 <script lang="typescript">
-    const a: string = 'Svelte',
-        b: string = 'Typescript',
-        c: string = 'Parcel'
+    import Home from './pages/Home.svelte'
 </script>
 
-<h1>{a} + {b} + {c}</h1>
+<Home />
 
 <style type="scss">
-    h1 {
-        font: normal 24pt Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-        color: dimgray;
-        cursor: default;
-    }
-
-    :global(html),
-    :global(body) {
+    :global(html, body) {
         position: relative;
         box-sizing: border-box;
         height: 100%;
@@ -25,5 +16,8 @@
         max-width: 1280px;
         height: 100%;
         margin: auto;
+
+        background-color: white;
+        color: black;
     }
 </style>

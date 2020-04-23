@@ -38,6 +38,7 @@
         "folder-logger": "^1.0.7",
         "nested-static": "^1.1.0",
         "node-sass": "^4.13.1",
+        "pages": "^0.0.16",
         "parcel-bundler": "^1.12.4",
         "parcel-plugin-svelte": "^4.0.6",
         "postcss": "^7.0.27",
