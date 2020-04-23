@@ -1,15 +1,9 @@
 <script>
-    let draggedOver = false
+    export let imageData
 
-    const isHoveringOverSelf = (parent, e) => {
-        const rect = parent.getBoundingClientRect()
-        return (
-            e.clientY >= rect.top &&
-            e.clientY <= rect.bottom &&
-            e.clientX >= rect.left &&
-            e.clientX <= rect.right
-        )
-    }
+    import { readFileData, isHoveringOverSelf } from '../utils'
+
+    let draggedOver = false
 
     const dragOver = () => {
         draggedOver = true
@@ -20,22 +14,28 @@
         draggedOver = false
     }
 
-    function drop(e, g) {
-        // TODO
+    const drop = async e => {
+        imageData =
+            e.dataTransfer.getData('URL') ||
+            (await readFileData(e.dataTransfer.files[0]))
     }
 
-    const change = e => {
-        console.log(e)
+    const change = async e => {
+        imageData = await readFileData(e.target.files[0])
     }
 </script>
 
 <div
     class="container"
-    on:dragover|capture={dragOver}
-    on:dragleave|capture={dragLeave}
-    on:drop|preventDefault={event => drop(event, g)}
+    on:dragover|preventDefault={dragOver}
+    on:dragleave={dragLeave}
+    on:drop|preventDefault={drop}
 >
-    <div class="drop-zone" class:dragged-over={draggedOver} />
+    <div
+        class="drop-zone"
+        class:dragged-over={draggedOver}
+        class:hidden={imageData}
+    />
     <label>
         <input id="file-upload" type="file" on:change={change} />
     </label>
@@ -61,6 +61,10 @@
         &.dragged-over {
             border: 2px solid #0073c0;
             opacity: 0.5;
+        }
+
+        &.hidden {
+            border: none;
         }
     }
 

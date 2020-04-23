@@ -17,7 +17,7 @@
         height: 100%;
         margin: auto;
 
-        background-color: white;
+        background-color: whitesmoke;
         color: black;
     }
 </style>

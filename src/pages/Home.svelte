@@ -5,37 +5,40 @@
     import Uploader from '../components/Uploader'
 
     let mounted = false
+    let imageData
 
     onMount(() => {
         mounted = true
     })
 
-    import Controller from '../controller/testController.ts'
-    Controller()
+    // $: console.log(imageData)
 </script>
 
-{#if mounted}
-    <main transition:fade={{ duration: 500 }}>
-        <header>
-            <p>Hello👋, this is</p>
-            <h1>
-                <FancyLink href="https://github.com/Nazeh/single-stroke">
-                    Single Stroke
-                </FancyLink>
-            </h1>
-            <h2>
-                <span>Generative art 🎨 by</span>
-                <FancyLink href="https://twitter.com/ArNazeh">
-                    Ar Nazeh
-                </FancyLink>
-            </h2>
-        </header>
-        <footer>
-            <p>Drag and drop an image or click to browse.</p>
-        </footer>
-        <Uploader />
-    </main>
-{/if}
+<main on:dragover|preventDefault={() => {}} on:drop|preventDefault={() => {}}>
+    {#if mounted && !imageData}
+        <div in:fade={{ duration: 500 }}>
+            <header>
+                <p>Hello👋, this is</p>
+                <h1>
+                    <FancyLink href="https://github.com/Nazeh/single-stroke">
+                        Single Stroke
+                    </FancyLink>
+                </h1>
+                <h2>
+                    <span>Generative art 🎨 by</span>
+                    <FancyLink href="https://twitter.com/ArNazeh">
+                        Ar Nazeh
+                    </FancyLink>
+                </h2>
+            </header>
+            <footer>
+                <p>Drag and drop an image or click to browse.</p>
+            </footer>
+        </div>
+    {/if}
+
+    <Uploader bind:imageData />
+</main>
 
 <style type="scss">
     main {
@@ -49,6 +52,8 @@
         align-items: center;
 
         padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 5px #0001;
 
         font-family: 'Roboto', sans-serif;
 
@@ -80,9 +85,5 @@
                 }
             }
         }
-    }
-
-    canvas {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 </style>
