@@ -28,3 +28,7 @@ Install project dependencies
 Run the local webpack-dev-server on http://localhost:8080/
 
 `yarn start`
+
+## Credit
+
+Used [hmmhmmhm/svelte-template](https://github.com/hmmhmmhm/svelte-template/blob/master/package.json)

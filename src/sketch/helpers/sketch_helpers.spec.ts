@@ -15,12 +15,12 @@ describe('scaleNeeded(src, trgt)', () => {
     });
     test('it returns the needed scale if src is smaller than target', () => {
       expect(scaleNeeded({ w, h }, { w: w * s, h: h * s }).toFixed(2)).toEqual(
-        s.toFixed(2),
+        s.toFixed(2)
       );
     });
     test('it returns the needed scale if src is larger than target', () => {
       expect(scaleNeeded({ w: w * s, h: h * s }, { w, h }).toFixed(2)).toEqual(
-        (1 / s).toFixed(2),
+        (1 / s).toFixed(2)
       );
     });
   });
@@ -32,12 +32,12 @@ describe('scaleNeeded(src, trgt)', () => {
     });
     test("it returns the needed if src's aspect ratio is bigger", () => {
       expect(scaleNeeded({ w: w * s, h }, { w, h }).toFixed(2)).toEqual(
-        (1 / s).toFixed(2),
+        (1 / s).toFixed(2)
       );
     });
     test("it returns the needed if trgt's aspect ratio is bigger", () => {
       expect(scaleNeeded({ w, h: h * s }, { w, h }).toFixed(2)).toEqual(
-        (1 / s).toFixed(2),
+        (1 / s).toFixed(2)
       );
     });
   });

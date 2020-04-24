@@ -1,9 +1,9 @@
-import UI from './view/index';
-import './style.css';
-import Controller from './controller/index';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
-const view = UI({
-  el: 'body',
+// @ts-ignore
+import Svelte from './index.svelte';
+
+new Svelte({
+  target: document.body,
 });
-
-Controller(view);

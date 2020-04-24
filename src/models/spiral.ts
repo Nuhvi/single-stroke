@@ -21,7 +21,7 @@ export default (
     wavingSize = 20,
     displacePower = 10,
     strokeWidth = 1,
-  } = {},
+  } = {}
 ): SpiralInterface => {
   // Take pixel density in consideration
   const pixelDensity = p5.pixelDensity();
@@ -84,14 +84,19 @@ export default (
 
   const addStroke = (p1: p5.Vector) => {
     const rgba = img.get(p1.x, p1.y);
-    if (!Array.isArray(rgba)) return;
+    let pixelVal = rgba[0] / 255;
+    if (pixelVal === 0) pixelVal = 1;
+
     const val =
-      p5.map(rgba[0] / 255, 0, 1, 1, 0) * (coilsGap / 2) * strokeWidth;
+      /*min val*/ 0.1 +
+      p5.map(pixelVal, 0, 1, 1, 0) * (coilsGap / 2) * strokeWidth;
+
     const p2 = p5.createVector(p1.x, p1.y);
-    const cos = Math.cos(theta);
-    const sin = Math.sin(theta);
-    p1.add(val * cos, val * sin);
-    p2.add(-val * cos, -val * sin);
+    const x = val * Math.cos(theta);
+    const y = val * Math.sin(theta);
+
+    p1.add(x, y);
+    p2.add(-x, -y);
     points.push(p1);
     reversePoints.push(p2);
   };
@@ -118,20 +123,6 @@ export default (
 
     points.push(point);
     return point;
-  };
-
-  const renderAll = () => {
-    p5.background('#fffffd');
-    p5.noStroke();
-    p5.fill(0, alpha * 255);
-    p5.beginShape();
-    points.forEach((p) => {
-      p5.vertex(p.x, p.y);
-    });
-    reversePoints.reverse().forEach((p) => {
-      p5.vertex(p.x, p.y);
-    });
-    p5.endShape(p5.CLOSE);
   };
 
   const renderLastSegment = () => {
@@ -168,7 +159,6 @@ export default (
   const grow = () => {
     growStepsAtAtime();
     updateAnimationCompleteStatus();
-    // if (isAnimationComplete) renderAll();
   };
 
   return Object.freeze({

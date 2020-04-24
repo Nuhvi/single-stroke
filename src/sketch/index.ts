@@ -16,7 +16,7 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
 
     const scale = scaleNeeded(
       { w: width, h: height },
-      { w: container.offsetWidth, h: container.offsetHeight },
+      { w: container.offsetWidth, h: container.offsetHeight }
     );
 
     width *= scale;
@@ -26,7 +26,7 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
     img.height = height;
 
     p5.resizeCanvas(width, height);
-    p5.pixelDensity(1 / scale);
+    p5.pixelDensity(Math.max(1 / scale, 1));
 
     img.loadPixels();
     img.filter(p5.GRAY);
@@ -45,12 +45,6 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
       p5.save('single-stroke-ar-nazeh');
     } else {
       spiral.grow();
-    }
-  };
-
-  p5.keyTyped = () => {
-    if (p5.key === 's') {
-      p5.save();
     }
   };
 };
