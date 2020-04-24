@@ -21,7 +21,7 @@ export default (
     wavingSize = 20,
     displacePower = 10,
     strokeWidth = 1,
-  } = {},
+  } = {}
 ): SpiralInterface => {
   // Take pixel density in consideration
   const pixelDensity = p5.pixelDensity();
@@ -125,10 +125,10 @@ export default (
     p5.noStroke();
     p5.fill(0, alpha * 255);
     p5.beginShape();
-    points.forEach((p) => {
+    points.forEach(p => {
       p5.vertex(p.x, p.y);
     });
-    reversePoints.reverse().forEach((p) => {
+    reversePoints.reverse().forEach(p => {
       p5.vertex(p.x, p.y);
     });
     p5.endShape(p5.CLOSE);

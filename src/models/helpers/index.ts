@@ -12,7 +12,7 @@ export const copyBlur = (p5: p5, img: p5.Image) => {
     0,
     0,
     img.width,
-    img.height,
+    img.height
   );
 
   blurredImg.filter(p5.BLUR, 3);

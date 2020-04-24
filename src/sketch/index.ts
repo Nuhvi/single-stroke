@@ -16,7 +16,7 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
 
     const scale = scaleNeeded(
       { w: width, h: height },
-      { w: container.offsetWidth, h: container.offsetHeight },
+      { w: container.offsetWidth, h: container.offsetHeight }
     );
 
     width *= scale;

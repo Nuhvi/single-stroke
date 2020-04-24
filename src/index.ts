@@ -1,9 +1,9 @@
-import 'core-js/stable'
-import 'regenerator-runtime/runtime'
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 // @ts-ignore
-import Svelte from './index.svelte'
+import Svelte from './index.svelte';
 
 new Svelte({
-    target: document.body,
-})
+  target: document.body,
+});
