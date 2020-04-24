@@ -47,10 +47,4 @@ export default (p5: p5, imgSrc: string, container: HTMLDivElement) => {
       spiral.grow();
     }
   };
-
-  p5.keyTyped = () => {
-    if (p5.key === 's') {
-      p5.save();
-    }
-  };
 };

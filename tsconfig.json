@@ -6,7 +6,7 @@
     "inlineSourceMap": false,
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "ES3",
+    "target": "ES5",
     "types": ["node", "jest"],
     "lib": ["dom"],
     "moduleResolution": "node",
