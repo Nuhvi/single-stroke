@@ -1,18 +1,16 @@
 <script lang="typescript">
   import Home from './components/Home.svelte';
   import Uploader from './components/Uploader.svelte';
-  import Canvas from './components/Canvas.svelte';
+  import App from './components/App.svelte';
 
   let imageData;
-
-  $: view = imageData ? 'CANVAS' : 'HOME';
 </script>
 
 <main on:dragover|preventDefault={() => {}} on:drop|preventDefault={() => {}}>
-  {#if view === 'HOME'}
+  {#if !imageData}
     <Home />
-  {:else if view === 'CANVAS'}
-    <Canvas {imageData} />
+  {:else}
+    <App bind:imageData />
   {/if}
   <Uploader bind:imageData />
 </main>
@@ -44,7 +42,6 @@
     justify-content: center;
     align-items: center;
 
-    padding: 20px;
     background-color: white;
     box-shadow: 0 0 5px #0001;
 

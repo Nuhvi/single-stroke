@@ -3,6 +3,8 @@
   import sketch from '../sketch';
   import { onMount } from 'svelte';
 
+  import Menu from './Menu';
+
   export let imageData;
 
   let wrapper;
@@ -14,17 +16,29 @@
     if (el instanceof HTMLDivElement) wrapper = el;
   });
 
-  $: {
+  const resetRenderer = () => {
     if (renderer) renderer.remove();
+  };
+
+  const homeHandler = () => {
+    imageData = null;
+    resetRenderer();
+  };
+
+  $: {
+    resetRenderer();
     renderer = new p5(p5 => sketch(p5, imageData, wrapper), wrapper);
   }
 </script>
 
 <div {id} />
+<Menu {homeHandler} />
 
-<style>
+<style lang="scss">
   div {
     width: 100%;
     height: 100%;
+    display: flex;
+    place-content: center;
   }
 </style>

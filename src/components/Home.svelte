@@ -38,6 +38,7 @@
   footer {
     opacity: 0.4;
     font-weight: bold;
+    padding: 0 2em;
   }
   header {
     margin: 2em;

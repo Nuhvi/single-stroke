@@ -65,7 +65,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    padding: inherit;
+    padding: 20px;
   }
 
   .drop-zone {
