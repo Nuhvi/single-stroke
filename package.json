@@ -43,7 +43,7 @@
     "pages": "^0.0.16",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-svelte": "^4.0.6",
-    "postcss": "^7.0.27",
+    "postcss": "^8.2.10",
     "postcss-load-config": "^2.1.0",
     "public-ip": "^4.0.0",
     "svelte": "^3.20.1",
