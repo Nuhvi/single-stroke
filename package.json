@@ -38,7 +38,7 @@
     "express": "^4.17.1",
     "folder-logger": "^1.0.7",
     "nested-static": "^1.1.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "p5": "^1.0.0",
     "pages": "^0.0.16",
     "parcel-bundler": "^1.12.4",
